@@ -34,7 +34,7 @@ laces==0.1.1
 libsass==0.23.0
 mypy==1.13.0
 mypy-extensions==1.0.0
--e git+https://github.com/LeoLChalot/vercel-django-integration.git@0d0c4dc4f45df6bb6df94c065c3a4a2363a155ca#egg=mysite
+# -e git+https://github.com/LeoLChalot/vercel-django-integration.git@0d0c4dc4f45df6bb6df94c065c3a4a2363a155ca#egg=mysite
 openpyxl==3.1.5
 packaging==24.1
 pillow==10.4.0
