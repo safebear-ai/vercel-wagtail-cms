@@ -21,7 +21,13 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS: list[str] = [".vercel.app", "now.sh", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS: list[str] = [
+    "vercel-django-ashen.vercel.app",
+    ".vercel.app",
+    "now.sh",
+    "127.0.0.1",
+    "localhost",
+]
 
 # Application definition
 
@@ -63,7 +69,6 @@ INSTALLED_APPS: list[str] = [
 ]
 
 MIDDLEWARE: list[str] = [
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     # Save pages to cache. Must be FIRST.
     "wagtailcache.cache.UpdateCacheMiddleware",
     # Common functionality
@@ -75,6 +80,7 @@ MIDDLEWARE: list[str] = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # CMS functionality
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     # Fetch from cache. Must be LAST.
