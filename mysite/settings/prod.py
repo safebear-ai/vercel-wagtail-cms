@@ -29,11 +29,14 @@ MANAGERS = ADMINS
 # Email address used to send error messages to ADMINS.
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": BASE_DIR / "cache",  # noqa
-        "KEY_PREFIX": "coderedcms",
-        "TIMEOUT": 14400,  # in seconds
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+#         "LOCATION": BASE_DIR / "cache",  # noqa
+#         "KEY_PREFIX": "coderedcms",
+#         "TIMEOUT": 14400,  # in seconds
+#     }
+# }
+
+
+WAGTAIL_CACHE = False
