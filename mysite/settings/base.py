@@ -26,6 +26,7 @@ ALLOWED_HOSTS: list[str] = [".vercel.app", "now.sh", "127.0.0.1", "localhost"]
 # Application definition
 
 INSTALLED_APPS: list[str] = [
+    "whitenoise.runserver_nostatic",
     # This project
     "website",
     "custom_media",
@@ -62,6 +63,7 @@ INSTALLED_APPS: list[str] = [
 ]
 
 MIDDLEWARE: list[str] = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # Save pages to cache. Must be FIRST.
     "wagtailcache.cache.UpdateCacheMiddleware",
     # Common functionality

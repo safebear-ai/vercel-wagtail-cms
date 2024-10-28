@@ -80,6 +80,7 @@ flycheck_*.el
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
@@ -403,3 +404,5 @@ cache/
 /poetry.lock
 /requirements-dev.txt
 /.venv
+
+./**/migrations/
