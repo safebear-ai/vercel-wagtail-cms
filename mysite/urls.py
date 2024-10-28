@@ -5,10 +5,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.urls.resolvers import URLResolver
 from wagtail.documents import urls as wagtaildocs_urls
 
 
-urlpatterns = [
+urlpatterns: list[URLResolver] = [
     # Admin
     path("django-admin/", admin.site.urls),
     path("admin/", include(crx_admin_urls)),
@@ -31,6 +32,6 @@ if settings.DEBUG:
     from django.conf.urls.static import static
 
     # Serve static and media files from development server
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # type: ignore
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # type: ignore
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 # fmt: on

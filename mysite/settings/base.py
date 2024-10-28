@@ -21,7 +21,7 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS: list[str] = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS: list[str] = [".vercel.app", "now.sh", "127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -103,10 +103,14 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES: dict[str, dict[str, str]] = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "verceldb",
+        "USER": "default",
+        "PASSWORD": "XhBuixsk8I0v",
+        "HOST": "ep-purple-cloud-a29m55cw-pooler.eu-central-1.aws.neon.tech",
+        "PORT": "5432",
     }
 }
 
@@ -175,7 +179,14 @@ WAGTAILIMAGES_IMAGE_MODEL = "custom_media.CustomImage"
 
 WAGTAILDOCS_DOCUMENT_MODEL = "custom_media.CustomDocument"
 
-WAGTAILIMAGES_EXTENSIONS: list[str] = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
+WAGTAILIMAGES_EXTENSIONS: list[str] = [
+    "gif",
+    "jpg",
+    "jpeg",
+    "png",
+    "webp",
+    "svg",
+]
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
