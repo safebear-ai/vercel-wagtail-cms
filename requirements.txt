@@ -33,6 +33,7 @@ packaging==24.1
 pillow==10.4.0
 pillow_heif==0.20.0
 psycopg-binary==3.2.3
+psycopg2-binary==2.9.10
 python-dateutil==2.9.0
 pytz==2024.2
 ratelim==0.1.6
