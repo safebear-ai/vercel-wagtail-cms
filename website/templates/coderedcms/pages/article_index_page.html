@@ -1,0 +1,59 @@
+{% extends "coderedcms/pages/web_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags coderedcms_tags %}
+{% block index_filters %}{% endblock %}
+{% block index_content %}
+{% if page.index_show_subpages %}
+<div class="container">
+  <div class="row g-4">
+    <nav style="width: 95%;" class="m-auto navbar navbar-expand-l border-bottom border-black ">
+      <div class="container-fluid ">
+        <p class="fs-5 mb-0">Articles à la une</p>
+        <li style="list-style-type: none;" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Catégories
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ page.url }}">Tous</a></li>
+            {% for tag in self.tags.all %}
+            <li><a class="dropdown-item" href="{{ page.url }}?tag={{ tag }}">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      </div>
+    </nav>
+      {% for article in index_paginated %}
+        {% if not request.GET.tag %}
+            {% include "../blocks/article_block_card.html" %}
+        {% endif %}
+      {% endfor %}
+      {% if request.GET.tag %}
+        <p class="text-center">{{ request.GET.tag }}</p>
+        {% for article in blogpages %}
+
+          {% include "../blocks/article_block_card.html" %}
+
+        {% empty %}
+          <p class="text-center">Pas d'article avec ce tag.</p>
+        {% endfor %}
+      {% endif %}
+    {% if page.index_classifiers.exists %}
+      <div class="col-md-3">
+        {% include "coderedcms/includes/classifier_nav.html" with navclass="nav-pills flex-column" %}
+      </div>
+    {% endif %}
+  </div>
+  {% include "coderedcms/includes/pagination.html" with items=index_paginated %}
+</div>
+       {% with tags=article.tags.all %}
+          {% if tags %}
+            <div class="tags">
+              <h3>Tags</h3>
+              {% for tag in tags %}
+                  <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
+              {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+<br>
+{% endif %}
+{% endblock %}

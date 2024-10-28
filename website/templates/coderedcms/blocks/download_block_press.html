@@ -1,0 +1,16 @@
+{% load wagtailcore_tags coderedcms_tags %}
+{% django_setting "CRX_DISABLE_ANALYTICS" as disable_analytics %}
+<a href="{{ page.downloadable_file.url }}" download="{{ page.downloadable_file.url }}"
+  {% if not disable_analytics and settings.coderedcms.AnalyticsSettings.ga_track_button_clicks %}
+  data-ga-event-category='{{ page.settings.ga_tracking_event_category|default:"Download" }}'
+  data-ga-event-label='{{ page.settings.ga_tracking_event_label|default:page.button_title }}'
+  {% endif %}
+  title="{{ page.alt_text|safe }}"
+  class='btn {{ page.button_style }} {{ page.button_size }} {{ page.settings.custom_css_class }}'
+  {% if page.settings.custom_id %}id="{{ page.settings.custom_id }}"{% endif %}>
+  {% if page.button_title %}
+  {{ page.button_title|safe }}
+  {% else %}
+  Telechargement {{ page.downloadable_file.title }}
+  {% endif %}
+</a>

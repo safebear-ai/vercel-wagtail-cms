@@ -1,0 +1,15 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+  <div id="card_index" class="card h-100 rounded-4">
+    {% if page.cover_image %}
+    {% image page.cover_image fill-800x450 format-webp preserve-svg as card_image %}
+    <a href="{% pageurl page %}" title="{% pageurl page %}"><img class="card-img-top rounded-top-4" src="{{card_image.url}}" alt="{{card_image.title}}"></a>
+    {% endif %}
+    <div class="card-body d-flex flex-column justify-content-between p-4 pb-1">
+      <h2 class="card-title"><a id="card-title-link" href="{% pageurl page %}" title="{{page.title}}">{{page.title}}</a></h2>
+      {% comment %} <div class="card-subtitle mb-2 text-muted">{{article.seo_published_at}} &bull; {{article.seo_author}}</div>
+      <div class="card-subtitle mb-2 text-muted">{{article.caption}}</div> {% endcomment %}
+      <p class="card-text">{{page.body_preview}}</p>
+      <a class="card-link" href="{% pageurl page %}" title="{{page.title}}">Lire l'article</a>
+    </div>
+  </div>

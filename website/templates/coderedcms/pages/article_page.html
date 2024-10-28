@@ -1,0 +1,128 @@
+{% extends "coderedcms/pages/web_page.html" %}
+
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %}
+
+{% block content %}
+<article class="crx-article">
+  {% block article_header %}
+  <div class="container my-4 text-center">
+    <h1>{{ self.title }}</h1>
+    {% if self.caption %}
+    <p class="lead">{{self.caption}}</p>
+    {% endif %}
+    <p>
+      {% if self.author %}
+      <img class="article-author-img rounded-circle me-2" src="{% avatar_url self.author %}">
+      {% endif %}
+      {% if self.seo_author %}
+      <span class="article-author">{{self.seo_author}}</span>
+      <span class="mx-2">&bull;</span>
+      {% endif %}
+      <span class="article-date">{{ self.seo_published_at }}</span>
+    </p>
+  </div>
+  {% endblock %}
+  {% block article_cover_image %}
+  
+  <div class="container mb-5">
+    {% if self.cover_image %}
+      {% image self.cover_image fill-1600x900 format-webp preserve-svg as cover_image %}
+      <img src="{{cover_image.url}}" class="rounded w-75 m-auto d-block">
+    {% endif %}
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      {% if self.get_ancestors|length > 1 %}
+          <ol class="breadcrumb">
+              {% for p in self.get_ancestors %}
+                  {% if p.is_root == False %}
+                      <li class="breadcrumb-item"><a href="{{ p.url }}">{{ p.title }}</a></li>
+                  {% endif %}
+              {% endfor %}
+              <li class="breadcrumb-item active">{{ self.title }}</li>
+          </ol>
+      {% endif %}
+    </nav>
+  </div>
+  {% endblock %}
+  {% block article_body %}
+  <div style="text-align: justify" class="container mx-auto article-body">
+    {% for block in self.body %}
+    {% include_block block with settings=settings %}
+    {% endfor %}
+    <p class="m-3"><a href="{{ page.get_parent.url }}">Retour au blog</a></p>
+  </div>
+  <div class="bg-body-tertiary mt-2">
+    <div class="container p-5 ">
+      <div class="fs-5 ">
+        <p>Sujet liés : 
+          {% for tag in self.tags.all %}
+            <a href="{{ page.get_parent.url }}?tag={{ tag }}" style="text-decoration: underline;">{{ tag }}</a>{% if not forloop.last %} / {% endif %}
+          {% endfor %}
+        </p>
+        {% comment %} <div class="container mt-5">
+          <p class="text-center">Avez-vous aimé cet article ?</p>
+          <p class="text-center fs-6 opacity-75">Cet article est noté 4.8/5 par nos lecteurs</p>
+          <div class="rate" style="display: inline-block; position: relative; left: 50%; transform: translateX(-50%);">
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1">1 star</label>
+          </div>
+          <p id="thankYouMessage" class="text-center fs-6 opacity-75 text-success" style="display: none;">Merci d'avoir donné votre avis !</p>
+        </div> {% endcomment %}
+        <div class="d-flex justify-content-center mt-3">
+          <!-- Button trigger modal -->
+          <button type="button" class=" btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Partager cet article
+          </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-2" id="exampleModalLabel">Partager cet article</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="d-flex justify-content-around">
+                  <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&related=&via=SafeBearapp&text={{ page.title|urlencode }}" related="via @SafeBearapp" target="_blank" rel="noopener noreferrer" class="">
+                    <i class="fa-brands fa-square-x-twitter fa-2xl" style="color: #000000;"></i>                 
+                  </a>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer" class="">
+                    <i class="fa-brands fa-facebook fa-2xl" style="color: #005eff;"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ page.title|urlencode }}" target="_blank" rel="noopener noreferrer" class="">
+                    <i class="fa-brands fa-linkedin fa-2xl" style="color: #0b70b8;"></i>
+                  </a>
+                  <a href="mailto:?subject={{ page.title|urlencode }}&body={{ request.build_absolute_uri }}" class="text-secondary">
+                    <i class="fa-solid fa-envelope fa-2xl" style="color: #5e6061;"></i>
+                  </a>
+                </div>
+                <hr>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="articleLink" value="{{ request.build_absolute_uri }}" readonly>
+                  <button class="btn btn-primary" type="button" id="button-addon2">Copier</button>
+                </div>
+                <div id="copySuccessMessage" class="text-success ms-1" style="display: none;">Lien copié dans le presse-papiers !</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  {% block related_content %}
+  {{ block.super }}
+  {% endblock %}
+</article>
+{% endblock %}
