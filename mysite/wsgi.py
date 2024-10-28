@@ -17,4 +17,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE","mysite.settings.prod")
 
 application= get_wsgi_application()
 
-app = application
+try:
+    app = get_wsgi_application()
+except ImportError:
+    pass
