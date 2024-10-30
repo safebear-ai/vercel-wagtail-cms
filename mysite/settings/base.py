@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 
@@ -165,8 +166,10 @@ STATICFILES_FINDERS: list[str] = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATIC_ROOT: Path = BASE_DIR / "static"
+
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 MEDIA_ROOT: Path = BASE_DIR / "media"
 MEDIA_URL = "/media/"
