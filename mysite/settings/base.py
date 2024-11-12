@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import environ
 
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
@@ -115,12 +117,12 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 DATABASES: dict[str, dict[str, str]] = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "verceldb",
-        "USER": "default",
-        "PASSWORD": "XhBuixsk8I0v",
-        "HOST": "ep-purple-cloud-a29m55cw-pooler.eu-central-1.aws.neon.tech",
-        "PORT": "5432",
+        "ENGINE": os.environ.get('ENGINE'),
+        "NAME": os.environ.get('NAME'),
+        "USER": os.environ.get('USER'),
+        "PASSWORD": os.environ.get('PASSWORD'),
+        "HOST": os.environ.get('HOST'),
+        "PORT": os.environ.get('PORT'),
     }
 }
 
