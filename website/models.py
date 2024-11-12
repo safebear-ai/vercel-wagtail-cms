@@ -18,6 +18,7 @@ from coderedcms.models import CoderedFormPage
 from coderedcms.models import CoderedLocationIndexPage
 from coderedcms.models import CoderedLocationPage
 from coderedcms.models import CoderedWebPage
+from custom_user import models as custom_user_models
 from django.db import models
 from modelcluster.fields import ParentalKey
 from wagtail import blocks
@@ -25,6 +26,74 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail.snippets.models import register_snippet
 
+from wagtail.images.models import Image, AbstractImage, AbstractRendition
+from wagtail.images import get_image_model_string
+import requests
+import os
+
+BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
+VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
+
+
+class CustomImage(AbstractImage):
+    """
+    Modèle personnalisé pour gérer l'upload d'image en utilisant le Blob Store de Vercel.
+    """
+    blob_url = models.URLField(blank=True, null=True)
+
+    # Ajouter des `related_name` uniques
+    tags = models.ManyToManyField(
+        'taggit.Tag',
+        through='CustomImageTag',
+        related_name='custom_media_images',  # Changer le related_name
+        blank=True
+    )
+
+    uploaded_by_user = models.ForeignKey(
+        custom_user_models.User,
+        null=True,
+        blank=True,
+        editable=False,
+        on_delete=models.SET_NULL,
+        related_name='custom_uploaded_images'  # Changer le related_name
+    )
+
+    def save(self, *args, **kwargs):
+        # Sauvegarde de base pour que le fichier soit accessible
+        super().save(*args, **kwargs)
+
+        # Envoi du fichier à l'API Blob de Vercel
+        with self.file.open('rb') as f:
+            files = {'file': (self.file.name, f, self.file.file.content_type)}
+            headers = {
+                'Authorization': f'Bearer {BLOB_READ_WRITE_TOKEN}'
+            }
+
+            response = requests.post(VERCEL_BLOB_API_URL, headers=headers, files=files)
+
+            if response.status_code == 200:
+                blob_data = response.json()
+                self.blob_url = blob_data.get("url")
+                # Sauvegarder de nouveau l'URL du blob
+                super().save(*args, **kwargs)
+            else:
+                raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store: {response.status_code} {response.text}")
+
+    # admin_form_fields = AbstractImage.admin_form_fields + ('blob_url',)  # Inclure l'URL Blob dans l'interface admin
+
+class CustomImageTag(models.Model):
+    tag = models.ForeignKey('taggit.Tag', related_name="custom_image_tags", on_delete=models.CASCADE)
+    content_object = models.ForeignKey(CustomImage, related_name="tagged_items", on_delete=models.CASCADE)
+
+class CustomRendition(AbstractRendition):
+    """
+    Classe pour gérer les rendus d'images personnalisés.
+    """
+    image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='renditions')
+
+    class Meta:
+        # Ajustement de la contrainte unique_together
+        unique_together = (('image', 'filter_spec', 'focal_point_key'),)
 
 class ArticlePage(CoderedArticlePage):
     """
@@ -46,15 +115,15 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     """
     Shows a list of article sub-pages.
     """
-    def get_context(self, request):
 
+    def get_context(self, request):
         # Filter by tag
-        tag = request.GET.get('tag')
-        blogpages =ArticlePage.objects.filter(tags__name=tag)
+        tag = request.GET.get("tag")
+        blogpages = ArticlePage.objects.filter(tags__name=tag)
 
         # Update template context
         context = super().get_context(request)
-        context['blogpages'] = blogpages
+        context["blogpages"] = blogpages
         return context
 
     class Meta:
@@ -67,8 +136,6 @@ class ArticleIndexPage(CoderedArticleIndexPage):
     subpage_types = ["website.ArticlePage"]
 
     template = "coderedcms/pages/article_index_page.html"
-    
-
 
 
 class EventPage(CoderedEventPage):

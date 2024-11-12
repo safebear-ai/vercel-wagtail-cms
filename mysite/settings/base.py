@@ -203,7 +203,7 @@ WAGTAILIMAGES_EXTENSIONS: list[str] = [
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 # WAGTAILADMIN_BASE_URL = "http://localhost"
-WAGTAILADMIN_BASE_URL = "https://vercel-django-integration.vercel.app/"
+WAGTAILADMIN_BASE_URL = "https://vercel-django-integration.vercel.app"
 
 
 # Tags
@@ -220,3 +220,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # custom implementation.
 CRX_DISABLE_NAVBAR = True
 CRX_DISABLE_FOOTER = True
+
+WAGTAILIMAGES_IMAGE_MODEL = 'website.CustomImage'
