@@ -14,7 +14,7 @@ INSTALLED_APPS += [  # noqa
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-WAGTAIL_CACHE = False
+WAGTAIL_CACHE = True
 
 try:
     from .local import *  # noqa
