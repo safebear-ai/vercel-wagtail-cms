@@ -11,7 +11,6 @@ from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images import get_image_model_string
 import os
 import requests
-import tempfile
 from django.conf import settings
 import vercel_blob
 
@@ -48,6 +47,10 @@ class CustomImage(AbstractImage):
 
         # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
+
+ 
+ 
+    admin_form_fields = Image.admin_form_fields + ("blob_url",)
 
 
 class CustomImageTag(models.Model):
