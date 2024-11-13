@@ -10,6 +10,7 @@ from wagtail.documents.models import Document
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images import get_image_model_string
 import os
+import tempfile
 import requests
 from django.conf import settings
 import vercel_blob
