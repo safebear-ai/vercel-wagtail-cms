@@ -14,10 +14,7 @@ import requests
 from django.conf import settings
 import vercel_blob
 
-BLOB_READ_WRITE_TOKEN = os.getenv(
-    "BLOB_READ_WRITE_TOKEN",
-    "vercel_blob_rw_gQb3DHG6aJKWElj6_A1CzC7NbP3Asf3I6t5Zccj8mWPXfpS",
-)
+BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
 VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
 
 
