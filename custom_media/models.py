@@ -59,7 +59,7 @@ class CustomImage(AbstractImage):
             else:
                 raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store: {response.status_code} {response.text}")
 
-    # admin_form_fields = AbstractImage.admin_form_fields + ('blob_url',)
+    admin_form_fields = Image.admin_form_fields + ('blob_url',)
 
 class CustomImageTag(models.Model):
     tag = models.ForeignKey(
