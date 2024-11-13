@@ -223,4 +223,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRX_DISABLE_NAVBAR = True
 CRX_DISABLE_FOOTER = True
 
-WAGTAILIMAGES_IMAGE_MODEL = 'website.CustomImage'
+WAGTAILIMAGES_IMAGE_MODEL = 'custom_media.CustomImage'

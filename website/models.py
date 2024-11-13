@@ -33,58 +33,6 @@ import os
 
 from django.conf import settings
 
-AUTH_USER_MODEL = settings.AUTH_USER_MODEL
-
-BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
-VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
-
-
-class CustomImage(AbstractImage):
-    """
-    Modèle personnalisé pour l'application `website`.
-    """
-    blob_url = models.URLField(blank=True, null=True)
-
-    tags = models.ManyToManyField(
-        'taggit.Tag',
-        through='website.CustomImageTag',
-        related_name='website_images',  # Change related_name to make it unique
-        blank=True
-    )
-
-    uploaded_by_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        null=True,
-        blank=True,
-        editable=False,
-        on_delete=models.SET_NULL,
-        related_name='website_uploaded_images'  # Change related_name to make it unique
-    )
-
-    def save(self, *args, **kwargs):
-        # Envoi du fichier à l'API Blob de Vercel (comme précédemment expliqué)
-        ...
-
-class CustomImageTag(models.Model):
-    tag = models.ForeignKey(
-        'taggit.Tag',
-        related_name='website_image_tags',  # Change related_name to make it unique
-        on_delete=models.CASCADE
-    )
-    content_object = models.ForeignKey(
-        CustomImage,
-        related_name='website_tagged_items',  # Change related_name to make it unique
-        on_delete=models.CASCADE
-    )
-
-class CustomRendition(AbstractRendition):
-    """
-    Classe pour gérer les rendus d'images personnalisés.
-    """
-    image = models.ForeignKey(CustomImage, on_delete=models.CASCADE, related_name='website_renditions')
-
-    class Meta:
-        unique_together = (('image', 'filter_spec', 'focal_point_key'),)
 
 class ArticlePage(CoderedArticlePage):
     """
