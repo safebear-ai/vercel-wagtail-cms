@@ -11,6 +11,7 @@ from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images import get_image_model_string
 import os
 import requests
+import tempfile
 from django.conf import settings
 import vercel_blob
 
@@ -22,33 +23,31 @@ class CustomImage(AbstractImage):
     blob_url = models.URLField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        # Vérifier si l'image a déjà été uploadée
+        # Vérifiez si l'image a déjà été uploadée
         if not self.blob_url:
-            with self.file.open("rb") as f:
-                # Lire le contenu du fichier
-                file_content = f.read()
-                # Définir le nom du fichier
-                file_name = self.file.name
+            # Créer un fichier temporaire
+            with tempfile.NamedTemporaryFile(dir='/tmp', delete=False) as tmp_file:
+                self.file.seek(0)  # S'assurer que le fichier est lu depuis le début
+                tmp_file.write(self.file.read())
+                tmp_file.flush()  # Forcer l'écriture sur le disque
 
-                # Upload vers le Blob Store de Vercel
-                try:
-                    vercel_blob.put(
-                        file_name, file_content, {"access": "public"}
-                    )
-                # try:
-                #     response = vercel_blob.put(
-                #         file_name, file_content, {"access": "public"}
-                #     )
-                    # self.blob_url = response.get("url")
-                except Exception as e:
-                    raise Exception(
-                        f"Erreur lors de l'upload sur Vercel Blob Store : {e}"
-                    )
+                # Charger le contenu pour l'upload
+                with open(tmp_file.name, 'rb') as f:
+                    file_content = f.read()
+                    file_name = self.file.name
 
-        # Appel de la méthode save() du parent pour enregistrer l'objet
+                    # Upload vers le Blob Store de Vercel
+                    try:
+                        response = vercel_blob.put(file_name, file_content, {"access": "public"})
+                        self.blob_url = response.get("url")
+                    except Exception as e:
+                        raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store : {e}")
+                    finally:
+                        # Supprimer le fichier temporaire
+                        os.remove(tmp_file.name)
+
+        # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
-
-    admin_form_fields = Image.admin_form_fields + ("blob_url",)
 
 
 class CustomImageTag(models.Model):

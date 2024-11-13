@@ -173,7 +173,11 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# Répertoire temporaire pour les fichiers
+TEMP_DIR = "/tmp"
+
+# Fichiers médias
+MEDIA_ROOT = TEMP_DIR
 MEDIA_URL = "/media/"
 
 
