@@ -48,6 +48,13 @@ class CustomImage(AbstractImage):
 
         # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
+        
+    @property
+    def url(self):
+        """
+        Override the default file URL to use blob_url.
+        """
+        return self.blob_url or super().file.url
 
  
  
