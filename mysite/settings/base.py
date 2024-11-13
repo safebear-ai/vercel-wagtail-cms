@@ -144,6 +144,8 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
 ]
 
 AUTH_USER_MODEL = "custom_user.User"
+WAGTAILDOCS_DOCUMENT_MODEL = 'custom_media.CustomDocument'
+
 
 
 # Internationalization
