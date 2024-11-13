@@ -32,10 +32,14 @@ class CustomImage(AbstractImage):
 
                 # Upload vers le Blob Store de Vercel
                 try:
-                    response = vercel_blob.put(
+                    vercel_blob.put(
                         file_name, file_content, {"access": "public"}
                     )
-                    self.blob_url = response.get("url")
+                # try:
+                #     response = vercel_blob.put(
+                #         file_name, file_content, {"access": "public"}
+                #     )
+                    # self.blob_url = response.get("url")
                 except Exception as e:
                     raise Exception(
                         f"Erreur lors de l'upload sur Vercel Blob Store : {e}"
