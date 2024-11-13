@@ -55,6 +55,8 @@ class CustomImage(AbstractImage):
 
                 # Upload vers le Blob Store de Vercel
                 response = requests.post(VERCEL_BLOB_API_URL, headers=headers, files=files)
+                
+                print(response.status_code)
 
                 if response.status_code == 200:
                     blob_data = response.json()
