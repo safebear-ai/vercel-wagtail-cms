@@ -45,26 +45,26 @@ class CustomImage(AbstractImage):
 
 
     def save(self, *args, **kwargs):
-        # Envoi du fichier à l'API Blob de Vercel
-        if not self.blob_url:  # Éviter les doubles uploads
-            with self.file.open("rb") as f:
-                files = {"file": (self.file.name, f, self.file.file.content_type)}
-                headers = {"Authorization": f"Bearer {BLOB_READ_WRITE_TOKEN}"}
+    # Ne pas re-tenter l'upload si le fichier a déjà une URL blob
+        if not self.blob_url:
+            with self.file.open('rb') as f:
+                files = {'file': (self.file.name, f, self.file.file.content_type)}
+                headers = {
+                    'Authorization': f'Bearer {BLOB_READ_WRITE_TOKEN}'
+                }
 
-                response = requests.post(
-                    VERCEL_BLOB_API_URL, headers=headers, files=files
-                )
+                # Envoi du fichier à l'API Blob de Vercel
+                response = requests.post(VERCEL_BLOB_API_URL, headers=headers, files=files)
 
                 if response.status_code == 200:
                     blob_data = response.json()
                     self.blob_url = blob_data.get("url")
                 else:
-                    raise Exception(
-                        f"Erreur lors de l'upload sur Vercel Blob Store: {response.status_code} {response.text}"
-                    )
+                    raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store: {response.status_code} {response.text}")
 
-        # Sauvegarder les métadonnées (URL blob) dans la base de données
+        # Sauvegarde des modifications dans la base de données
         super().save(*args, **kwargs)
+
 
     admin_form_fields = Image.admin_form_fields + ("blob_url",)
 
