@@ -12,6 +12,7 @@ from wagtail.images import get_image_model_string
 import os
 import requests
 from django.conf import settings
+import vercel_blob
 
 BLOB_READ_WRITE_TOKEN = os.getenv(
     "BLOB_READ_WRITE_TOKEN",
@@ -21,56 +22,30 @@ VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
 
 
 class CustomImage(AbstractImage):
-    """
-    Modèle personnalisé pour gérer l'upload d'image en utilisant le Blob Store de Vercel.
-    """
-
     blob_url = models.URLField(blank=True, null=True)
 
-    tags = models.ManyToManyField(
-        "taggit.Tag",
-        through="custom_media.CustomImageTag",
-        related_name="custom_media_images",  # Change related_name to make it unique
-        blank=True,
-    )
-
-    uploaded_by_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        null=True,
-        blank=True,
-        editable=False,
-        on_delete=models.SET_NULL,
-        related_name="custom_media_uploaded_images",  # Change related_name to make it unique
-    )
-
-
     def save(self, *args, **kwargs):
-        # Vérifiez si l'URL Blob existe déjà pour éviter un re-upload inutile
+        # Vérifier si l'image a déjà été uploadée
         if not self.blob_url:
-            with self.file.open('rb') as f:
-                files = {'file': (self.file.name, f, self.file.file.content_type)}
-                headers = {
-                    'Authorization': f'Bearer {BLOB_READ_WRITE_TOKEN}'
-                }
+            with self.file.open("rb") as f:
+                # Lire le contenu du fichier
+                file_content = f.read()
+                # Définir le nom du fichier
+                file_name = self.file.name
 
                 # Upload vers le Blob Store de Vercel
-                response = requests.post(VERCEL_BLOB_API_URL, headers=headers, files=files)
-                
-                print(response.status_code)
+                try:
+                    response = vercel_blob.put(
+                        file_name, file_content, {"access": "public"}
+                    )
+                    self.blob_url = response.get("url")
+                except Exception as e:
+                    raise Exception(
+                        f"Erreur lors de l'upload sur Vercel Blob Store : {e}"
+                    )
 
-                if response.status_code == 200:
-                    blob_data = response.json()
-                    self.blob_url = blob_data.get("url")  # Enregistrer l'URL publique
-                else:
-                    raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store: {response.status_code} {response.text}")
-
-        # Sauvegarder dans la base uniquement après l'upload réussi
-        if not self._state.adding and 'force_insert' not in kwargs:  # Éviter les doublons
-            kwargs['force_update'] = True
-
+        # Appel de la méthode save() du parent pour enregistrer l'objet
         super().save(*args, **kwargs)
-
-
 
     admin_form_fields = Image.admin_form_fields + ("blob_url",)
 
@@ -89,10 +64,6 @@ class CustomImageTag(models.Model):
 
 
 class CustomRendition(AbstractRendition):
-    """
-    Classe pour gérer les rendus d'images personnalisés.
-    """
-
     image = models.ForeignKey(
         CustomImage, on_delete=models.CASCADE, related_name="renditions"
     )
