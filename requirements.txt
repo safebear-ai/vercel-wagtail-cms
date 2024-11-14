@@ -8,6 +8,7 @@ coderedcms==4.0.1
 colorama==0.4.6
 decorator==5.1.1
 defusedxml==0.7.1
+dj-database-url==2.3.0
 Django==5.1.2
 django-bootstrap5==24.2
 django-environ==0.11.2
@@ -43,6 +44,7 @@ six==1.16.0
 soupsieve==2.6
 sqlparse==0.5.1
 telepath==0.3.1
+typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 vercel_blob==0.3.0

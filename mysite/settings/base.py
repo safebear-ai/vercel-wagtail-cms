@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os
 from pathlib import Path
+from urllib.parse import ParseResult, ParseResultBytes, urlparse
 import vercel_blob
+import dj_database_url
+import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
@@ -117,16 +120,27 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES: dict[str, dict[str, str]] = {
-    "default": {
-        "ENGINE": os.environ.get("ENGINE"),
-        "NAME": os.environ.get("NAME"),
-        "USER": os.environ.get("USER"),
-        "PASSWORD": os.environ.get("PASSWORD"),
-        "HOST": os.environ.get("HOST"),
-        "PORT": os.environ.get("PORT"),
+print(type(os.getenv("DATABASE_URL")))
+
+
+# Replace the DATABASES section of your settings.py with this
+database_url = os.getenv("DATABASE_URL")
+if isinstance(database_url, bytes):
+    database_url = database_url.decode("utf-8")
+
+tmpPostgres = urlparse(database_url)
+
+DATABASES = {
+    'default': {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "neondb",
+        "USER": "neondb_owner",
+        "PASSWORD": "2ZGYg5cSDPRe",
+        "HOST": "ep-divine-term-a2nqlz58-pooler.eu-central-1.aws.neon.tech",
+        "PORT": 5432,  # Par défaut : 5432
     }
 }
+
 
 
 # Password validation
