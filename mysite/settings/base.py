@@ -18,7 +18,7 @@ import vercel_blob
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 print(BASE_DIR)
-
+print(vercel_blob.list())
 
 
 
