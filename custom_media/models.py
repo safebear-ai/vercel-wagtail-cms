@@ -59,10 +59,6 @@ class CustomImage(AbstractImage):
         """
         return self.blob_url or super().file.url
 
- 
- 
-    admin_form_fields = Image.admin_form_fields + ("blob_url",)
-
 
 class CustomImageTag(models.Model):
     tag = models.ForeignKey(
