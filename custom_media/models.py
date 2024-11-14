@@ -21,6 +21,9 @@ VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
 
 class CustomImage(AbstractImage):
     blob_url = models.URLField(blank=True, null=True)
+    admin_form_fields = Image.admin_form_fields + (
+        'blob_url',
+    )
 
     def save(self, *args, **kwargs):
         # Vérifiez si l'image a déjà été uploadée
