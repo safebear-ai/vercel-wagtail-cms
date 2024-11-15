@@ -730,7 +730,7 @@ progress {
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
   max-width: 100%;
-  height: auto;
+  /* height: auto; */
 }
 
 .figure {

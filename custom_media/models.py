@@ -4,8 +4,9 @@ models related to website content should most likely go in
 ``website.models`` instead.
 """
 from dotenv import load_dotenv
-load_dotenv()
 
+# Charge les variables d'environnement
+load_dotenv()
 from django.db import models
 from wagtail.documents.models import AbstractDocument
 from wagtail.documents.models import Document
@@ -59,7 +60,7 @@ class CustomImage(AbstractImage):
         super().save(*args, **kwargs)
         
     @property
-    def url(self):
+    def get_image_url(self):
         """
         Override the default file URL to use blob_url.
         """

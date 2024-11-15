@@ -1,0 +1,9 @@
+<div class="image">
+    {% if image.get_image_url %}
+        <img src="{{ image.get_image_url }}" class="show-transparency" alt="{{ image.title }}">
+    {% else %}
+        <div class="error">
+            <p>Image non disponible</p>
+        </div>
+    {% endif %}
+</div>
