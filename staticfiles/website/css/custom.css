@@ -12636,4 +12636,30 @@ h2[data-block-key], [data-block-key].h2, h3[data-block-key], [data-block-key].h3
   padding: 0 15px;
 }
 
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+figcaption {
+  font-size: 0.875rem;
+  color: #555;
+  word-wrap: break-word;
+}
+
 /*# sourceMappingURL=../css/custom.css.map */
