@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from urllib.parse import ParseResult, ParseResultBytes, urlparse
 import vercel_blob
 from mysite.config import AppSettings
 import os
