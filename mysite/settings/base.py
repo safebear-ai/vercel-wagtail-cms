@@ -13,10 +13,22 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from urllib.parse import ParseResult, ParseResultBytes, urlparse
 import vercel_blob
-import dj_database_url
+from mysite.config import AppSettings
 import os
 
+# Charge les paramètres
 
+config = AppSettings()
+
+print(config.app_name)
+print(config.db_url)
+print(config.db_engine)
+print(config.db_host)
+print(config.db_port)
+print(config.db_user)
+print(config.db_password)
+print(config.db_name)
+print(config.blob_read_write_token)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
@@ -120,24 +132,15 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-print(type(os.getenv("DATABASE_URL")))
-
-
-# Replace the DATABASES section of your settings.py with this
-database_url = os.getenv("DATABASE_URL")
-if isinstance(database_url, bytes):
-    database_url = database_url.decode("utf-8")
-
-tmpPostgres = urlparse(database_url)
 
 DATABASES = {
     'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "neondb",
-        "USER": "neondb_owner",
-        "PASSWORD": "2ZGYg5cSDPRe",
-        "HOST": "ep-divine-term-a2nqlz58-pooler.eu-central-1.aws.neon.tech",
-        "PORT": 5432,
+        "ENGINE": config.db_engine,
+        "NAME": config.db_name,
+        "USER": config.db_user,
+        "PASSWORD": config.db_password,
+        "HOST": config.db_host,
+        "PORT": config.db_port,
     }
 }
 
