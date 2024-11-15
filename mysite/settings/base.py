@@ -137,7 +137,7 @@ DATABASES = {
         "USER": "neondb_owner",
         "PASSWORD": "2ZGYg5cSDPRe",
         "HOST": "ep-divine-term-a2nqlz58-pooler.eu-central-1.aws.neon.tech",
-        "PORT": 5432,  # Par défaut : 5432
+        "PORT": 5432,
     }
 }
 
