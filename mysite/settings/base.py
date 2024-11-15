@@ -15,25 +15,27 @@ from urllib.parse import ParseResult, ParseResultBytes, urlparse
 import vercel_blob
 from mysite.config import AppSettings
 import os
+from dotenv import load_dotenv
 
-# Charge les paramètres
+load_dotenv()
 
+# Charger les paramètres
 config = AppSettings()
 
 print(config.app_name)
-print(config.db_url)
-print(config.db_engine)
-print(config.db_host)
-print(config.db_port)
-print(config.db_user)
-print(config.db_password)
-print(config.db_name)
+print(config.database_url)
+print(config.database_engine)
+print(config.pghost)
+print(config.database_port)
+print(config.pguser)
+print(config.pgpassword)
+print(config.pgdatabase)
 print(config.blob_read_write_token)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
-print(BASE_DIR)
-print(vercel_blob.list())
+# print(BASE_DIR)
+# print(vercel_blob.list())
 
 
 
@@ -135,12 +137,12 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 DATABASES = {
     'default': {
-        "ENGINE": config.db_engine,
-        "NAME": config.db_name,
-        "USER": config.db_user,
-        "PASSWORD": config.db_password,
-        "HOST": config.db_host,
-        "PORT": config.db_port,
+        "ENGINE": config.database_engine,
+        "NAME": config.pgdatabase,
+        "USER": config.pguser,
+        "PASSWORD": config.pgpassword,
+        "HOST": config.pghost,
+        "PORT": config.database_port,
     }
 }
 

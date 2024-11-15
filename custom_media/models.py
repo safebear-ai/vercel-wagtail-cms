@@ -3,6 +3,8 @@ Custom overrides of Wagtail Document and Image models. All other
 models related to website content should most likely go in
 ``website.models`` instead.
 """
+from dotenv import load_dotenv
+load_dotenv()
 
 from django.db import models
 from wagtail.documents.models import AbstractDocument
@@ -13,6 +15,7 @@ import os
 import tempfile
 import vercel_blob
 from mysite.config import AppSettings
+
 
 
 config = AppSettings()

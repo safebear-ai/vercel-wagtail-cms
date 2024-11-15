@@ -15,13 +15,13 @@ class AppSettings(BaseSettings):
     version: str = "1.0.0"
 
     # Configuration de la base de données
-    db_url: PostgresDsn
-    db_engine: str
-    db_host: str
-    db_port: int
-    db_user: str
-    db_password: str
-    db_name: str
+    database_url: PostgresDsn
+    database_engine: str
+    pghost: str
+    database_port: int
+    pguser: str
+    pgpassword: str
+    pgdatabase: str
     
     # Configuration du Blob Store
     blob_read_write_token: str
