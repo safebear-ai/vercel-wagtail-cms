@@ -191,8 +191,8 @@ STATICFILES_FINDERS: list[str] = [
 ]
 
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "static/"
+STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Répertoire temporaire pour les fichiers

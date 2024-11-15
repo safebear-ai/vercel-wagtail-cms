@@ -217,43 +217,55 @@ a:hover {
   transition: opacity 0.5s ease-in-out; /* Transition en fondu */
 }
 
-ul.listing.horiz.images {
-  display: flex; /* Permet d'aligner les images horizontalement */
-  flex-wrap: wrap; /* Passe à la ligne automatiquement si nécessaire */
-  gap: 10px; /* Espace entre les éléments */
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-ul.listing.horiz.images li {
-  flex: 1 1 calc(25% - 10px); /* Affiche 4 images par ligne (ajuster 25% si besoin) */
-  max-width: calc(25% - 10px);
-  text-align: center;
-}
-
-ul.listing.horiz.images .image {
-  position: relative;
-  padding-bottom: 100%; /* Maintient une proportion carrée */
-  overflow: hidden;
-  border-radius: 8px; /* Coins arrondis */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajoute une ombre */
-  background-color: #f8f9fa; /* Fond gris clair en cas d'absence d'image */
-}
-
-ul.listing.horiz.images .image img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Remplit l'espace en conservant les proportions */
-  border-radius: 8px; /* Même arrondi que le conteneur */
-}
-
-ul.listing.horiz.images figcaption {
-  margin-top: 8px;
-  font-size: 0.875rem; /* Texte légèrement plus petit */
-  color: #555;
-  word-wrap: break-word; /* Coupe les longs titres */
-}
+/* Conteneur global */
+.nice-padding {
+    display: flex; /* Utilise flexbox pour l'agencement des miniatures */
+    flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+    gap: 20px; /* Ajoute de l'espace entre les miniatures */
+    justify-content: flex-start; /* Aligne les miniatures à gauche */
+    padding: 0;
+  }
+  
+  /* Conteneur des miniatures */
+  .thumbnail {
+    flex: 1 1 calc(20% - 20px); /* Définit 5 miniatures par ligne */
+    max-width: calc(20% - 20px)!important;
+    text-align: center;
+    background-color: #fff; /* Fond blanc pour la miniature */
+    border: 1px solid #ddd; /* Bordure fine pour les miniatures */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    overflow: hidden;
+  }
+  
+  /* Image de la miniature */
+  .thumbnail figure {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    aspect-ratio: 1; /* Rend les miniatures carrées */
+    overflow: hidden;
+  }
+  
+  .thumbnail figure img {
+    width: 100%!important; /* S'adapte à la largeur du conteneur */
+    height: 100%; /* S'adapte à la hauteur */
+    object-fit: cover; /* Remplit l'espace tout en gardant les proportions */
+    display: block;
+  }
+  
+  /* Titre des miniatures */
+  .thumbnail figcaption {
+    margin-top: 8px;
+    font-size: 0.875rem; /* Texte légèrement plus petit */
+    color: #555;
+    word-wrap: break-word; /* Coupe les longs titres */
+    padding: 0 5px;
+  }
+  
+  /* Gestion des états au survol */
+  .thumbnail:hover {
+    border-color: #007bff; /* Change la bordure au survol */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Accentue l'ombre */
+  }
+  
