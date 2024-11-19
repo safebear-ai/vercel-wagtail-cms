@@ -3,7 +3,10 @@ Custom overrides of Wagtail Document and Image models. All other
 models related to website content should most likely go in
 ``website.models`` instead.
 """
+from dotenv import load_dotenv
 
+# Charge les variables d'environnement
+load_dotenv()
 from django.db import models
 from wagtail.documents.models import AbstractDocument
 from wagtail.documents.models import Document
@@ -11,15 +14,16 @@ from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images import get_image_model_string
 import os
 import tempfile
-import requests
-from django.conf import settings
 import vercel_blob
-from dotenv import load_dotenv
+from mysite.config import AppSettings
 
-load_dotenv()
 
-BLOB_READ_WRITE_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")
-VERCEL_BLOB_API_URL = "https://api.vercel.com/v1/blobs"
+
+config = AppSettings()
+
+BLOB_READ_WRITE_TOKEN: str = config.blob_read_write_token
+
+VERCEL_BLOB_API_URL: str = "https://api.vercel.com/v1/blobs"
 
 
 class CustomImage(AbstractImage):
@@ -56,7 +60,7 @@ class CustomImage(AbstractImage):
         super().save(*args, **kwargs)
         
     @property
-    def url(self):
+    def get_image_url(self):
         """
         Override the default file URL to use blob_url.
         """

@@ -18,6 +18,7 @@ from coderedcms.models import CoderedFormPage
 from coderedcms.models import CoderedLocationIndexPage
 from coderedcms.models import CoderedLocationPage
 from coderedcms.models import CoderedWebPage
+from custom_media.models import CustomImage
 from custom_user import models as custom_user_models
 from django.db import models
 from modelcluster.fields import ParentalKey
@@ -25,7 +26,6 @@ from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail.snippets.models import register_snippet
-
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.images import get_image_model_string
 import requests
@@ -38,6 +38,19 @@ class ArticlePage(CoderedArticlePage):
     """
     Article, suitable for news or blog content.
     """
+    custom_cover_image = models.ForeignKey(
+        CustomImage,  # Modèle CustomImage
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",  # Empêche la création d'une relation inverse
+        verbose_name="Cover Image",
+        help_text="Choisissez une image de couverture pour cet article.",
+    )
+
+    content_panels = CoderedArticlePage.content_panels + [
+        FieldPanel("custom_cover_image"),  
+    ]
 
     class Meta:
         verbose_name = "Article"
@@ -48,6 +61,7 @@ class ArticlePage(CoderedArticlePage):
 
     template = "coderedcms/pages/article_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
+    
 
 
 class ArticleIndexPage(CoderedArticleIndexPage):

@@ -11,17 +11,30 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from urllib.parse import ParseResult, ParseResultBytes, urlparse
 import vercel_blob
-import dj_database_url
+from mysite.config import AppSettings
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
+# Charger les paramètres
+config = AppSettings()
+
+# print(config.app_name)
+# print(config.database_url)
+# print(config.database_engine)
+# print(config.pghost)
+# print(config.database_port)
+# print(config.pguser)
+# print(config.pgpassword)
+# print(config.pgdatabase)
+# print(config.blob_read_write_token)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
-print(BASE_DIR)
-print(vercel_blob.list())
+# print(BASE_DIR)
+# print(vercel_blob.list())
 
 
 
@@ -120,24 +133,15 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-print(type(os.getenv("DATABASE_URL")))
-
-
-# Replace the DATABASES section of your settings.py with this
-database_url = os.getenv("DATABASE_URL")
-if isinstance(database_url, bytes):
-    database_url = database_url.decode("utf-8")
-
-tmpPostgres = urlparse(database_url)
 
 DATABASES = {
     'default': {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "neondb",
-        "USER": "neondb_owner",
-        "PASSWORD": "2ZGYg5cSDPRe",
-        "HOST": "ep-divine-term-a2nqlz58-pooler.eu-central-1.aws.neon.tech",
-        "PORT": 5432,  # Par défaut : 5432
+        "ENGINE": config.database_engine,
+        "NAME": config.pgdatabase,
+        "USER": config.pguser,
+        "PASSWORD": config.pgpassword,
+        "HOST": config.pghost,
+        "PORT": config.database_port,
     }
 }
 
@@ -187,8 +191,8 @@ STATICFILES_FINDERS: list[str] = [
 ]
 
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "static/"
+STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Répertoire temporaire pour les fichiers
