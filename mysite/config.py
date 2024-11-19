@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 from pydantic import PostgresDsn
 
 
-BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 print(f"Settings path: {BASE_DIR}")
 
 
@@ -16,7 +16,7 @@ class AppSettings(BaseSettings):
 
     # Configuration de la base de données
     database_url: PostgresDsn
-    database_engine: str
+    database_engine: str = "django.db.backends.postgresql"
     pghost: str
     database_port: int
     pguser: str
@@ -32,3 +32,4 @@ class AppSettings(BaseSettings):
     class Config:
         env_file: str = ".env"
         env_file_encoding: str = "utf-8"
+        extra = "allow"
