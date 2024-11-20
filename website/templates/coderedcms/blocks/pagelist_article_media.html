@@ -8,7 +8,7 @@
   {% if article.cover_image %}
   <div class="flex-shrink-0">
     {% image article.cover_image fill-800x450 format-webp preserve-svg as cover_image %}
-    <a href="{{article.url}}"><img class="me-3" src="{{cover_image.url}}" alt="{{cover_image.title}}"></a>
+    <a href="{{article.url}}"><img class="me-3" src="{{cover_image.blob_url}}" alt="{{cover_image.title}}"></a>
   </div>
   {% endif %}
   <div class="flex-grow-1 ms-3">
@@ -31,7 +31,7 @@
       {% comment %} {% if article.cover_image %}
         <div class="flex-shrink-0">
           {% image article.cover_image fill-800x450 format-webp preserve-svg as cover_image %}
-          <a href="{{article.url}}"><img class="me-3" src="{{cover_image.url}}" alt="{{cover_image.title}}"></a>
+          <a href="{{article.url}}"><img class="me-3" src="{{cover_image.blob_url}}" alt="{{cover_image.title}}"></a>
         </div>
       {% endif %} {% endcomment %}
       <div class="flex-grow-1 ms-3">

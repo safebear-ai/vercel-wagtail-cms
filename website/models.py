@@ -48,9 +48,6 @@ class ArticlePage(CoderedArticlePage):
         help_text="Choisissez une image de couverture pour cet article.",
     )
 
-    content_panels = CoderedArticlePage.content_panels + [
-        FieldPanel("custom_cover_image"),  
-    ]
 
     class Meta:
         verbose_name = "Article"

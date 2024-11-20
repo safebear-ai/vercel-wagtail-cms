@@ -65,6 +65,24 @@ class CustomImage(AbstractImage):
         Override the default file URL to use blob_url.
         """
         return self.blob_url or super().file.url
+    
+    def delete(self, *args, **kwargs):
+        """
+        Surcharge de la méthode delete pour supprimer l'image du Blob Store
+        avant de la retirer de la base de données.
+        """
+        try:
+            # Supprimer du Blob Store si blob_url est défini
+            if self.blob_url:
+                response = vercel_blob.delete(self.blob_url)
+                if response.get("status") != "success":
+                    raise Exception(f"Erreur lors de la suppression dans le Blob Store : {response}")
+        except Exception as e:
+            print(f"Erreur lors de la suppression de l'image dans le Blob Store : {e}")
+
+        # Supprimer l'entrée de la base de données
+        super().delete(*args, **kwargs)
+        
 
 
 class CustomImageTag(models.Model):
