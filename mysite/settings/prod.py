@@ -29,6 +29,4 @@ MANAGERS = ADMINS
 # Email address used to send error messages to ADMINS.
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-
-
 WAGTAIL_CACHE = True
