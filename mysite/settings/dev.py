@@ -6,7 +6,7 @@ DEBUG = True
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "2(-_x@7e09)^!=dsi^_1j=tchz)ecy2q1)7rti4*r**p4%ma#&"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "localhost"]
 
 INSTALLED_APPS += [  # noqa
     "django_sass",
