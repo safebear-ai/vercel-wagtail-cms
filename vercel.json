@@ -18,13 +18,5 @@
             "src": "/static/(.*)",
             "dest": "/staticfiles/$1"
         }
-    ],
-    "ignoreFiles": [
-        "**/tests/**",
-        "**/__pycache__/**",
-        "**/*.md",
-        "**/*.pyc",
-        "**/node_modules/**",
-        "**/notebooks/**"
     ]
 }
