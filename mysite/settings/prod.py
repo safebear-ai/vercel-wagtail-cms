@@ -1,13 +1,13 @@
 from .base import *  # noqa
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "2(-_x@7e09)^!=dsi^_1j=tchz)ecy2q1)7rti4*r**p4%ma#&"
 
 # Add your site's domain name(s) here.
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = [".vercel.app", "localhost"]
 
 # To send email from the server, we recommend django_sendmail_backend
 # Or specify your own email backend such as an SMTP server.
