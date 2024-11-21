@@ -5,7 +5,7 @@ from pydantic import PostgresDsn
 
 
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
-print(f"Settings path: {BASE_DIR}")
+# print(f"Settings path: {BASE_DIR}")
 
 
 class AppSettings(BaseSettings):
@@ -32,4 +32,4 @@ class AppSettings(BaseSettings):
     class Config:
         env_file: str = ".env"
         env_file_encoding: str = "utf-8"
-        extra = "allow"
+        # extra = "allow"
