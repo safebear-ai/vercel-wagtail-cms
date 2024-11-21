@@ -16,7 +16,7 @@ class AppSettings(BaseSettings):
 
     # Configuration de la base de données
     database_url: PostgresDsn
-    database_engine: str = "django.db.backends.postgresql"
+    database_engine: str
     pghost: str
     database_port: int
     pguser: str
