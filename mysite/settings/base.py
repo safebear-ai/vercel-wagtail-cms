@@ -21,6 +21,7 @@ load_dotenv()
 # Charger les paramètres
 config = AppSettings()
 
+print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
 print(config.app_name)
 print(config.database_url)
 print(config.database_engine)
