@@ -10,18 +10,18 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 class AppSettings(BaseSettings):
     # # Paramètres de base
-    app_name: str = "mySite"
-    debug: bool = False
+    app_name: str = "mysite"
+    debug: bool
     version: str = "1.0.0"
 
     # Configuration de la base de données
-    database_url: PostgresDsn
-    database_engine: str
+    database_url: str
     pghost: str
-    database_port: int
     pguser: str
     pgpassword: str
     pgdatabase: str
+    database_port: int
+    database_engine: str
     
     # Configuration du Blob Store
     blob_read_write_token: str
@@ -30,6 +30,6 @@ class AppSettings(BaseSettings):
     # api_key: str
 
     class Config:
-        env_file: str = ".env"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'development')}"
         env_file_encoding: str = "utf-8"
         # extra = "allow"
