@@ -10,9 +10,9 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 class AppSettings(BaseSettings):
     # # Paramètres de base
-    # app_name: str = "mySite"
-    # debug: bool = False
-    # version: str = "1.0.0"
+    app_name: str = "mySite"
+    debug: bool = False
+    version: str = "1.0.0"
 
     # Configuration de la base de données
     database_url: PostgresDsn
