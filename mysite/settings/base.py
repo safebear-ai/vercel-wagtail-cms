@@ -22,22 +22,11 @@ load_dotenv()
 config = AppSettings()
 
 print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
-print(config.app_name)
-print(config.database_url)
-print(config.database_engine)
-print(config.pghost)
-print(config.database_port)
-print(config.pguser)
-print(config.pgpassword)
-print(config.pgdatabase)
-print(config.blob_read_write_token)
+# print(config.database_url)
+
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
-# print(BASE_DIR)
-# print(vercel_blob.list())
-
-
 
 
 # Quick-start development settings - unsuitable for production

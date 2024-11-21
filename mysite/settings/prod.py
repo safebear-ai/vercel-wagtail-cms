@@ -7,7 +7,7 @@ DEBUG = False
 SECRET_KEY = "2(-_x@7e09)^!=dsi^_1j=tchz)ecy2q1)7rti4*r**p4%ma#&"
 
 # Add your site's domain name(s) here.
-ALLOWED_HOSTS = [".vercel.app", "localhost"]
+ALLOWED_HOSTS = [".vercel.app"]
 
 # To send email from the server, we recommend django_sendmail_backend
 # Or specify your own email backend such as an SMTP server.
@@ -29,14 +29,6 @@ MANAGERS = ADMINS
 # Email address used to send error messages to ADMINS.
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-#         "LOCATION": BASE_DIR / "cache",  # noqa
-#         "KEY_PREFIX": "coderedcms",
-#         "TIMEOUT": 14400,  # in seconds
-#     }
-# }
 
 
 WAGTAIL_CACHE = True
