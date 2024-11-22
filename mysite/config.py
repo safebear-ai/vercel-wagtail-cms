@@ -30,6 +30,6 @@ class AppSettings(BaseSettings):
     # api_key: str
 
     class Config:
-        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'preview')}"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'development')}"
         env_file_encoding: str = "utf-8"
-        # extra = "allow"
+
