@@ -10,7 +10,7 @@ print(f"Settings path: {BASE_DIR}")
 
 class AppSettings(BaseSettings):
     # Paramètres de base
-    app_name: str = "mySite"
+    app_name: str = "mysite"
     debug: bool = False
     version: str = "1.0.0"
 
