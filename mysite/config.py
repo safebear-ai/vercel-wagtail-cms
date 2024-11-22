@@ -32,6 +32,7 @@ class AppSettings(BaseSettings):
     # api_key: str
 
     class Config:
-        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'local')}"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'production')}"
+        # env_file: str = f".env.{os.getenv('ENVIRONMENT', 'local')}"
         env_file_encoding: str = "utf-8"
 

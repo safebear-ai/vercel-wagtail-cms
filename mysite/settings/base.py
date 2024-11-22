@@ -24,7 +24,7 @@ config = AppSettings()
 
 print(config.database_url)
 
-print("ENVIRONMENT:", os.getenv('ENVIRONMENT', 'development'))
+print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
