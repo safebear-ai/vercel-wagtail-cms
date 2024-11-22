@@ -4,9 +4,10 @@ from pydantic_settings import BaseSettings
 from pydantic import PostgresDsn
 
 
-BASE_DIR: Path = Path(__file__).resolve().parent.parent
-# print(f"Settings path: {BASE_DIR}")
 
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
+print(f".env.{os.getenv('ENVIRONMENT', 'local')}")
 
 class AppSettings(BaseSettings):
     # # Paramètres de base
@@ -15,6 +16,7 @@ class AppSettings(BaseSettings):
     version: str = "1.0.0"
 
     # Configuration de la base de données
+    
     database_url: str
     pghost: str
     pguser: str
@@ -30,6 +32,6 @@ class AppSettings(BaseSettings):
     # api_key: str
 
     class Config:
-        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'development')}"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'local')}"
         env_file_encoding: str = "utf-8"
 

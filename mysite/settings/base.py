@@ -15,15 +15,16 @@ import vercel_blob
 from mysite.config import AppSettings
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
 # Charger les paramètres
 config = AppSettings()
 
-print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
-# print(config.database_url)
+print(config.database_url)
 
+print("ENVIRONMENT:", os.getenv('ENVIRONMENT', 'development'))
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
@@ -124,17 +125,26 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         "ENGINE": config.database_engine,
+#         "NAME": config.pgdatabase,
+#         "USER": config.pguser,
+#         "PASSWORD": config.pgpassword,
+#         "HOST": config.pghost,
+#         "PORT": config.database_port,
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        "ENGINE": config.database_engine,
-        "NAME": config.pgdatabase,
-        "USER": config.pguser,
-        "PASSWORD": config.pgpassword,
-        "HOST": config.pghost,
-        "PORT": config.database_port,
-    }
+    'default': dj_database_url.parse(
+        config.database_url,
+        conn_max_age=600,  # Connexion persistante pour de meilleures performances
+        ssl_require=False  # Changer à True si nécessaire en production
+    )
 }
 
+print("DATABASE CONFIGURATION:", DATABASES)
 
 
 # Password validation

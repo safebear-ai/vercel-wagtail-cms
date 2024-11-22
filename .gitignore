@@ -6,6 +6,7 @@
 
 ./venv
 ./package-lock.json
+./node_module/
 ### Emacs ###
 
 # -*- mode: gitignore; -*-
