@@ -23,7 +23,7 @@ class AppSettings(BaseSettings):
     pgpassword: str
     pgdatabase: str
     database_port: int
-    database_engine: str
+    database_engine: str = "django.db.backends.postgresql"
     
     # Configuration du Blob Store
     blob_read_write_token: str
