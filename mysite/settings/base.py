@@ -34,13 +34,13 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS: list[str] = [
-    "vercel-django-ashen.vercel.app",
-    ".vercel.app",
-    "now.sh",
-    "127.0.0.1",
-    "localhost",
-]
+if config.debug:
+    ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "[::1]"]
+else:
+    ALLOWED_HOSTS: list[str] = ["vercel-django-ashen.vercel.app",
+                     ".vercel.app"]
+
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 # Application definition
 
@@ -140,12 +140,14 @@ DATABASES = {
     'default': dj_database_url.parse(
         config.database_url,
         conn_max_age=600,  # Connexion persistante pour de meilleures performances
-        ssl_require=False  # Changer à True si nécessaire en production
+        # Changer à True si nécessaire en production
+        ssl_require=False if os.getenv('ENVIRONMENT') == "local" else True
     )
 }
 
 print("DATABASE CONFIGURATION:", DATABASES)
-
+print(os.getenv("PGHOST"))
+print(os.getenv("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -167,7 +169,6 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
 
 AUTH_USER_MODEL = "custom_user.User"
 WAGTAILDOCS_DOCUMENT_MODEL = 'custom_media.CustomDocument'
-
 
 
 # Internationalization
