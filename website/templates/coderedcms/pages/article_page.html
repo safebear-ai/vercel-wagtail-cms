@@ -26,8 +26,7 @@
   
   <div class="container mb-5">
     {% if self.cover_image %}
-      {% image self.cover_image fill-1600x900 format-webp preserve-svg as cover_image %}
-      <img src="{{image.blob_url}}" class="rounded w-75 m-auto d-block">
+      <img src="{{self.cover_image.blob_url}}" class="rounded w-75 m-auto d-block">
     {% endif %}
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
       {% if self.get_ancestors|length > 1 %}
