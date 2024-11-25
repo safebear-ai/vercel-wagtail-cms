@@ -4,6 +4,7 @@ Copyright 2018-2023 CodeRed LLC
 License: https://github.com/coderedcorp/coderedcms/blob/main/LICENSE
 */
 
+
 /* Font sizes and inputs */
 
 code,
@@ -15,10 +16,11 @@ textarea.monospace,
   font-weight: 1rem;
 }
 
-.input input[type="color"] {
+.input input[type='color']{
   height: 40px;
   padding: 5px;
 }
+
 
 /* Show the site's custom logo in the wagtail admin */
 
@@ -34,6 +36,7 @@ textarea.monospace,
   margin: 0;
 }
 
+
 /* Display the optional banner above main content */
 
 .crx-banner {
@@ -43,13 +46,14 @@ textarea.monospace,
   z-index: 1;
 }
 .crx-banner ~ .content-wrapper {
-  padding-top: calc(1.5em + 8px);
+    padding-top: calc(1.5em + 8px);
 }
+
 
 /* Streamfield editor */
 
 .crx-collapsible {
-  padding: 0;
+  padding:0;
   margin: -16px 0 10px 0;
 }
 .crx-collapsible .crx-collapsible-target {
@@ -83,65 +87,4 @@ textarea.monospace,
 .crx-callout .crx-big-icon {
   font-size: 5rem;
   color: var(--w-color-text-label);
-}
-
-/* Conteneur global */
-.nice-padding {
-  display: flex;
-  /* Utilise flexbox pour l'agencement des miniatures */
-  flex-wrap: wrap;
-  /* Permet de passer à la ligne si nécessaire */
-  gap: 20px;
-  /* Ajoute de l'espace entre les miniatures */
-  justify-content: flex-start;
-  padding-top: 40px;
-}
-
-/* Conteneur des miniatures */
-.thumbnail {
-  position: relative;
-  flex: 1 1 calc(15% - 20px); /* 5 miniatures par ligne */
-  max-width: calc(
-    15% - 20px
-  ); /* Limite la largeur pour aligner les miniatures */
-  text-align: center;
-  border-radius: 0 8px 8px 8px; /* Coins arrondis */
-
-  overflow: hidden; /* Évite les débordements */
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-
-.thumbnail input {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  opacity: 1;
-  cursor: pointer;
-}
-
-/* Image de la miniature */
-.thumbnail figure {
-  border-radius: 8px; /* Coins arrondis */
-  margin: 0;
-  padding: 0;
-  position: relative;
-  aspect-ratio: 1; /* Rend les miniatures carrées */
-  overflow: hidden;
-}
-
-.thumbnail figure img {
-  width: 100%; /* S'adapte à la largeur du conteneur */
-  height: 100%; /* S'adapte à la hauteur */
-  object-fit: cover; /* Remplit l'espace tout en gardant les proportions */
-  display: block;
-}
-
-
-
-/* Gestion des états au survol */
-.thumbnail:hover {
-  border-color: #007bff; /* Change la bordure au survol */
-  box-shadow: 0 2px 4px rgb(64, 171, 175); /* Ombre légère */
-  transform: translateY(-4px); /* Légère élévation */
 }
