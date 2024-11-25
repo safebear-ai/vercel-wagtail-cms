@@ -12,9 +12,10 @@
             {% include "wagtailadmin/bulk_actions/listing_checkbox_cell.html" with obj_type="image" instance=image aria_describedby=title_id only %}
             <a class="image-choice" title="{% if collections %}{{ image.collection.name }} » {% endif %}{{ image.title }}" href="{% url view.edit_url_name image.id %}{% if next %}?next={{ next|urlencode }}{% endif %}">
                 <figure>
-                    {% include "wagtailimages/images/results_image.html" %} 
+                    <div class="image"><img alt="" class="show-transparency" height="92" src="{{ image.blob_url }}" width="165"></div>
                 </figure>
                 {{ image.title|ellipsistrim:60 }}
+                
             </a>
         </div> 
         {% endfor %}
