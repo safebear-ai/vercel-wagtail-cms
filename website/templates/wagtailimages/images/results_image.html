@@ -1,11 +1,3 @@
-{% if image.get_image_url %}
-<img
-  src="{{ image.blob_url }}"
-  class="show-transparency"
-  alt="{{ image.title }}"
-/>
-{% else %}
-<div class="error">
-  <p>Image non disponible</p>
-</div>
-{% endif %}
+{% load wagtailimages_tags %}
+
+<div class="image">{% image image max-165x165 class="show-transparency" alt="" %}</div>
