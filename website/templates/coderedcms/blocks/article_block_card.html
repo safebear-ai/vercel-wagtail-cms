@@ -3,7 +3,7 @@
   <div id="card_index" class="card mb-3 h-100 rounded-4">
     {% if article.cover_image %}
     <div class="image">
-      <img alt="" class="show-transparency fill-800x450 format-webp preserve-svg" height="92" src="/media/images/comment-reagir-en-cas-de-harcelement.max-165x165.jpg" width="165">
+      <img alt="" class="show-transparency fill-800x450 format-webp preserve-svg" height="92" src="{{ article.cover_image.blob_url}}" width="165">
     </div>
 
     <a href="{{article.url}}" title="{{article.title}}"><img class="card-img-top rounded-top-4" src="{{cover_image.blob_url}}" alt="{{cover_image.title}}"></a>
