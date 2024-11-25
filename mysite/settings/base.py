@@ -24,7 +24,7 @@ config = AppSettings()
 
 print(config.database_url)
 
-print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
+
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
@@ -40,7 +40,8 @@ else:
     ALLOWED_HOSTS: list[str] = ["vercel-django-ashen.vercel.app",
                      ".vercel.app"]
 
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
+
 
 # Application definition
 
@@ -148,6 +149,8 @@ DATABASES = {
 print("DATABASE CONFIGURATION:", DATABASES)
 print(os.getenv("PGHOST"))
 print(os.getenv("DATABASE_URL"))
+print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
