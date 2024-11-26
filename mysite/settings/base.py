@@ -16,6 +16,7 @@ from mysite.config import AppSettings
 import os
 from dotenv import load_dotenv
 import dj_database_url
+from mysite.storage_backend import blob_storage
 
 load_dotenv()
 
@@ -28,6 +29,21 @@ print(config.database_url)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+
+# settings.py
+DEFAULT_FILE_STORAGE = 'storage_backend.blob_storage.VercelBlobStorage'
+
+def list_all_blobs():
+    return vercel_blob.list({
+        'limit': '5',
+    })
+
+print(list_all_blobs())
+
+def upload_a_blob():
+    with open('file.txt', 'rb') as f:
+        resp = vercel_blob.put('test.txt', f.read())
+        print(resp)
 
 
 # Quick-start development settings - unsuitable for production
@@ -144,6 +160,16 @@ DATABASES = {
         # Changer à True si nécessaire en production
         ssl_require=False if os.getenv('ENVIRONMENT') == "local" else True
     )
+}
+
+# Configuration des backend de stockage
+STORAGES = {
+    "default": {
+        "BACKEND": DEFAULT_FILE_STORAGE,
+    },
+    "media": {
+        "BACKEND": DEFAULT_FILE_STORAGE,
+    },
 }
 
 print("DATABASE CONFIGURATION:", DATABASES)

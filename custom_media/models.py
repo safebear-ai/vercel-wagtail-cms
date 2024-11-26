@@ -24,6 +24,7 @@ BLOB_READ_WRITE_TOKEN: str = config.blob_read_write_token
 VERCEL_BLOB_API_URL: str = "https://api.vercel.com/v1/blobs"
 
 
+
 class CustomImage(AbstractImage):
     blob_url = models.URLField(blank=True, null=True)
     admin_form_fields = Image.admin_form_fields + (
