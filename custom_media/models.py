@@ -13,7 +13,7 @@ import tempfile
 import vercel_blob
 from django.core.files.storage import default_storage
 from django.db import models
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.documents.models import AbstractDocument
 from wagtail.images.models import AbstractImage, AbstractRendition, Image
 
