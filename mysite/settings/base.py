@@ -164,7 +164,7 @@ STORAGES = {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
     "staticfiles": {
-        "BACKEND": 'storage_backend.vercel_blob_storage.VercelBlobStorage',
+        "BACKEND": 'mysite.storage_backend.vercel_blob_storage.VercelBlobStorage',
     },
 }
 
