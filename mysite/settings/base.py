@@ -143,7 +143,7 @@ STORAGES = {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
     "staticfiles": {
-        "BACKEND": DEFAULT_FILE_STORAGE,
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
