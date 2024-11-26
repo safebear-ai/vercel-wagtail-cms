@@ -31,7 +31,7 @@ print(config.database_url)
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 
 # settings.py
-DEFAULT_FILE_STORAGE = 'storage_backend.blob_storage.VercelBlobStorage'
+DEFAULT_FILE_STORAGE = 'mysite.storage_backend.blob_storage.VercelBlobStorage'
 
 def upload_a_blob():
     with open('file.txt', 'rb') as f:
@@ -135,27 +135,16 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         "ENGINE": config.database_engine,
-#         "NAME": config.pgdatabase,
-#         "USER": config.pguser,
-#         "PASSWORD": config.pgpassword,
-#         "HOST": config.pghost,
-#         "PORT": config.database_port,
-#     }
-# }
-
+# Database configuration
 DATABASES = {
     'default': dj_database_url.parse(
         config.database_url,
-        conn_max_age=600,  # Connexion persistante pour de meilleures performances
-        # Changer à True si nécessaire en production
+        conn_max_age=600,
         ssl_require=False if os.getenv('ENVIRONMENT') == "local" else True
     )
 }
 
-# Configuration des backend de stockage
+# Backend configuration
 STORAGES = {
     "default": {
         "BACKEND": DEFAULT_FILE_STORAGE,
