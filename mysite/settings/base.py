@@ -31,7 +31,7 @@ print(config.database_url)
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 
 # settings.py
-DEFAULT_FILE_STORAGE = 'mysite.storage_backend.blob_storage.VercelBlobStorage'
+DEFAULT_FILE_STORAGE = 'storage_backend.blob_storage.VercelBlobStorage'
 
 def upload_a_blob():
     with open('file.txt', 'rb') as f:
@@ -164,7 +164,7 @@ STORAGES = {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
     "staticfiles": {
-        "BACKEND": 'mysite.storage_backend.vercel_blob_storage.VercelBlobStorage',
+        "BACKEND": DEFAULT_FILE_STORAGE,
     },
 }
 
