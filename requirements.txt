@@ -28,6 +28,7 @@ draftjs-exporter==5.0.0
 et_xmlfile==2.0.0
 filetype==1.2.0
 future==1.0.0
+geocoder==1.38.1
 icalendar==5.0.13
 idna==3.10
 jmespath==1.0.1
@@ -37,7 +38,7 @@ libsass==0.23.0
 openpyxl==3.1.5
 pillow==10.4.0
 pillow_heif==0.20.0
-psycopg2-binary==2.9.10
+psycopg==3.2.3
 pydantic==2.9.2
 pydantic-settings==2.6.1
 pydantic_core==2.23.4

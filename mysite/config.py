@@ -1,11 +1,6 @@
 import os
 from pathlib import Path
 from pydantic_settings import BaseSettings
-from pydantic import PostgresDsn
-from dotenv import load_dotenv
-
-
-load_dotenv()
 
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
@@ -18,9 +13,7 @@ class AppSettings(BaseSettings):
 
     # Configuration de la base de données
     database_url: str
-    # database_url_unpooled: str
     pghost: str
-    # pghost_unpooled: str
     pguser: str
     pgpassword: str
     pgdatabase: str
@@ -29,9 +22,10 @@ class AppSettings(BaseSettings):
     
     # Configuration du Blob Store
     blob_read_write_token: str
+    blob_bucket: str
 
     # Configuration API ou autre
-    # api_key: str
+    api_base_url: str = "https://blob.vercel-storage.com"
 
     class Config:
         env_file: str = f".env.{os.getenv('ENVIRONMENT', 'development')}"

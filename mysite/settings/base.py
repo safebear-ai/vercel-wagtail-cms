@@ -12,15 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
-
 import dj_database_url
-import vercel_blob
 from dotenv import load_dotenv
-
 from mysite.config import AppSettings
-from mysite.storage_backend.blob_storage import VercelBlobStorage
-
-load_dotenv()
 
 # Charger les paramètres
 config = AppSettings()
@@ -147,7 +141,7 @@ STORAGES = {
     },
 }
 
-print("ENVIRONMENT:", os.getenv("ENVIRONMENT"))
+# print("ENVIRONMENT:", os.getenv("ENVIRONMENT"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
