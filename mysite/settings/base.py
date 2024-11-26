@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
-import vercel_blob
-from mysite.config import AppSettings
 import os
-from dotenv import load_dotenv
+from pathlib import Path
+
 import dj_database_url
+import vercel_blob
+from dotenv import load_dotenv
+
+from mysite.config import AppSettings
 from mysite.storage_backend.blob_storage import VercelBlobStorage
 
 load_dotenv()
@@ -23,34 +25,22 @@ load_dotenv()
 # Charger les paramètres
 config = AppSettings()
 
-print(config.database_url)
-
-
+# print(config.database_url)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 
 # settings.py
-DEFAULT_FILE_STORAGE = 'mysite.storage_backend.blob_storage.VercelBlobStorage'
-
-def upload_a_blob():
-    with open('file.txt', 'rb') as f:
-        resp = vercel_blob.put('test.txt', f.read())
-        print(resp)
+DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStorage"
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-
 if config.debug:
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "[::1]"]
 else:
-    ALLOWED_HOSTS: list[str] = ["vercel-django-ashen.vercel.app",
-                     ".vercel.app"]
-
-
-
+    ALLOWED_HOSTS: list[str] = ["vercel-django-ashen.vercel.app", ".vercel.app"]
 
 # Application definition
 
@@ -137,10 +127,10 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 # Database configuration
 DATABASES = {
-    'default': dj_database_url.parse(
+    "default": dj_database_url.parse(
         config.database_url,
         conn_max_age=600,
-        ssl_require=False if os.getenv('ENVIRONMENT') == "local" else True
+        ssl_require=False if os.getenv("ENVIRONMENT") == "local" else True,
     )
 }
 
@@ -157,11 +147,7 @@ STORAGES = {
     },
 }
 
-print("DATABASE CONFIGURATION:", DATABASES)
-print(os.getenv("PGHOST"))
-print(os.getenv("DATABASE_URL"))
-print("ENVIRONMENT:", os.getenv('ENVIRONMENT'))
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+print("ENVIRONMENT:", os.getenv("ENVIRONMENT"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -182,8 +168,7 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
 ]
 
 AUTH_USER_MODEL = "custom_user.User"
-WAGTAILDOCS_DOCUMENT_MODEL = 'custom_media.CustomDocument'
-
+WAGTAILDOCS_DOCUMENT_MODEL = "custom_media.CustomDocument"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -196,7 +181,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -205,10 +189,8 @@ STATICFILES_FINDERS: list[str] = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-
 STATIC_URL = "static/"
 STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
-
 
 # Répertoire temporaire pour les fichiers
 TEMP_DIR = "/tmp"
@@ -217,12 +199,10 @@ TEMP_DIR = "/tmp"
 MEDIA_ROOT = TEMP_DIR
 MEDIA_URL = "/media/"
 
-
 # Login
 
 LOGIN_URL = "wagtailadmin_login"
 LOGIN_REDIRECT_URL = "wagtailadmin_home"
-
 
 # Wagtail settings
 
@@ -248,21 +228,17 @@ WAGTAILIMAGES_EXTENSIONS: list[str] = [
 # WAGTAILADMIN_BASE_URL = "http://localhost"
 WAGTAILADMIN_BASE_URL = "https://vercel-django-integration.vercel.app"
 
-
 # Tags
-
 TAGGIT_CASE_INSENSITIVE = True
-
 
 # Sets default for primary key IDs
 # See https://docs.djangoproject.com/en/5.1/ref/models/fields/#bigautofield
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 # Disable built-in CRX Navbar and Footer since this project has a
 # custom implementation.
 CRX_DISABLE_NAVBAR = True
 CRX_DISABLE_FOOTER = True
 
-WAGTAILIMAGES_IMAGE_MODEL = 'custom_media.CustomImage'
+WAGTAILIMAGES_IMAGE_MODEL = "custom_media.CustomImage"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # Limite de 5 Mo
