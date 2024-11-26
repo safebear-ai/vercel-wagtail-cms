@@ -7,15 +7,17 @@ from dotenv import load_dotenv
 
 # Charge les variables d'environnement
 load_dotenv()
-from django.db import models
-from wagtail.documents.models import AbstractDocument
-from wagtail.images.models import Image, AbstractImage, AbstractRendition
 import os
 import tempfile
+
 import vercel_blob
+from django.core.files.storage import default_storage
+from django.db import models
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.documents.models import AbstractDocument
+from wagtail.images.models import AbstractImage, AbstractRendition, Image
+
 from mysite.config import AppSettings
-
-
 
 config = AppSettings()
 
@@ -32,46 +34,44 @@ class CustomImage(AbstractImage):
     )
 
     def save(self, *args, **kwargs):
-        # Check if the image has already been uploaded
         """
         Saves the CustomImage instance, uploading the file to Vercel's Blob Store
         if it has not already been uploaded.
 
-        This method checks if the image has a blob_url. If not, it creates a temporary
-        file and uploads the image content to Vercel's Blob Store, setting the blob_url
-        upon successful upload. After uploading, it removes the temporary file.
-
-        Parameters:
-        *args: Variable length argument list.
-        **kwargs: Arbitrary keyword arguments.
-
-        Raises:
-        Exception: If an error occurs during the upload to Vercel's Blob Store.
+        This method checks if the image has a blob_url. If not, it uploads the image content
+        using the default storage backend (which should be VercelBlobStorage).
         """
         if not self.blob_url:
-            # Create a temporary file
-            with tempfile.NamedTemporaryFile(dir='/tmp', delete=False) as tmp_file:
-                self.file.seek(0)  # Make sure the file is read from the beginning
-                tmp_file.write(self.file.read())
-                tmp_file.flush()  # Force write
-                
-                # Uploading content
-                with open(tmp_file.name, 'rb') as f:
-                    file_content = f.read()
-                    file_name = self.file.name
+            # Utiliser le backend de stockage par défaut pour sauvegarder l'image
+            try:
+                file_name = self.file.name
+                self.blob_url = default_storage.save(file_name, self.file)
+            except Exception as e:
+                raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store : {e}")
 
-                    # Upload to Vercel's Blob Store
-                    try:
-                        response = vercel_blob.put(file_name, file_content, {"access": "public"})
-                        self.blob_url = response.get("url")
-                    except Exception as e:
-                        raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store : {e}")
-                    finally:
-                        # Delete temporary file
-                        os.remove(tmp_file.name)
-
-        # Save to database
+        # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
+    
+    @property
+    def get_image_url(self):
+        """
+        Override the default file URL to use blob_url.
+        """
+        return self.blob_url or super().file.url
+
+    def delete(self, *args, **kwargs):
+        """
+        Surcharge de la méthode delete pour supprimer l'image du Blob Store
+        avant de la retirer de la base de données.
+        """
+        try:
+            if self.blob_url:
+                default_storage.delete(self.blob_url)
+        except Exception as e:
+            print(f"Erreur lors de la suppression de l'image dans le Blob Store : {e}")
+
+        # Supprimer l'entrée de la base de données
+        super().delete(*args, **kwargs)
         
     @property
     def get_image_url(self):

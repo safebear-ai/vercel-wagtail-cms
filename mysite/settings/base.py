@@ -16,7 +16,7 @@ from mysite.config import AppSettings
 import os
 from dotenv import load_dotenv
 import dj_database_url
-from mysite.storage_backend import blob_storage
+from mysite.storage_backend.blob_storage import VercelBlobStorage
 
 load_dotenv()
 
@@ -31,14 +31,7 @@ print(config.database_url)
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 
 # settings.py
-DEFAULT_FILE_STORAGE = 'storage_backend.blob_storage.VercelBlobStorage'
-
-def list_all_blobs():
-    return vercel_blob.list({
-        'limit': '5',
-    })
-
-print(list_all_blobs())
+DEFAULT_FILE_STORAGE = 'mysite.storage_backend.blob_storage.VercelBlobStorage'
 
 def upload_a_blob():
     with open('file.txt', 'rb') as f:
@@ -169,6 +162,9 @@ STORAGES = {
     },
     "media": {
         "BACKEND": DEFAULT_FILE_STORAGE,
+    },
+    "staticfiles": {
+        "BACKEND": 'storage_backends.vercel_blob_storage.VercelBlobStorage',
     },
 }
 
