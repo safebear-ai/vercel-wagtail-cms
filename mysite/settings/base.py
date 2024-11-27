@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode, urlparse
 
 import dj_database_url
 from django.core.files.storage import FileSystemStorage, default_storage
@@ -23,7 +24,7 @@ from mysite.storage_backend.blob_storage import VercelBlobStorage
 
 # Charger les paramètres
 config = AppSettings()
-DEBUG = config.debug
+# DEBUG = config.debug
 # print(config.database_url)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
@@ -124,14 +125,21 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
+
 # Database configuration
+# database_url = os.getenv("DATABASE_URL_OPTION")
+database_url = config.database_url
+
+print(f"[SETTINGS] DATABASE_URL : {os.getenv("DATABASE_URL_OPTION")}")
 DATABASES = {
     "default": dj_database_url.parse(
-        config.database_url,
+        database_url,
         conn_max_age=600,
         ssl_require= True,
     )
 }
+
+
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

@@ -27,6 +27,7 @@ class AppSettings(BaseSettings):
     api_base_url: str = "https://blob.vercel-storage.com"
 
     class Config:
-        env_file: str = f".env.{os.getenv('ENVIRONMENT', 'preview')}"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', "development")}"
         env_file_encoding: str = "utf-8"
         print(f"Chargement des paramètres depuis le fichier {env_file}")
+        
