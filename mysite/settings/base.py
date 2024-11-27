@@ -24,7 +24,7 @@ print(default_storage)
 
 # Charger les paramètres
 config = AppSettings()
-
+DEBUG = config.debug
 # print(config.database_url)
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
@@ -45,7 +45,6 @@ else:
 # Application definition
 
 INSTALLED_APPS: list[str] = [
-    "whitenoise.runserver_nostatic",
     # This project
     "website",
     "custom_media",
@@ -77,6 +76,7 @@ INSTALLED_APPS: list[str] = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
 ]
@@ -133,6 +133,8 @@ DATABASES = {
         ssl_require=False if os.getenv("ENVIRONMENT") == "local" else True,
     )
 }
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Backend configuration
 
@@ -191,8 +193,13 @@ STATICFILES_FINDERS: list[str] = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATIC_URL = "/staticfiles/"
-STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_HOST = "vercel-django-integration-jonz9ypl8-leolchalots-projects.vercel.app" if not DEBUG else ""
+
+# STATIC_URL = STATIC_HOST + "/static/"
+STATIC_URL = "/static/"
+STATIC_ROOT: str = BASE_DIR / "staticfiles"
+
+
 
 # Répertoire temporaire pour les fichiers
 TEMP_DIR = "/tmp"
