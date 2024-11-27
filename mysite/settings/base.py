@@ -12,9 +12,15 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+
 import dj_database_url
-from dotenv import load_dotenv
+from django.core.files.storage import FileSystemStorage, default_storage
+
 from mysite.config import AppSettings
+
+from mysite.storage_backend.blob_storage import VercelBlobStorage
+
+print(default_storage)
 
 # Charger les paramètres
 config = AppSettings()
@@ -133,11 +139,8 @@ STORAGES = {
     "default": {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
-    "media": {
-        "BACKEND": DEFAULT_FILE_STORAGE,
-    },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": DEFAULT_FILE_STORAGE,
     },
 }
 

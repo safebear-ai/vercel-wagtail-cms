@@ -8,8 +8,10 @@ from django.core.files.storage import default_storage
 from django.db import models
 from wagtail.documents.models import AbstractDocument
 from wagtail.images.models import AbstractImage, AbstractRendition, Image
+from django.core.files.base import ContentFile
+from mysite.config import AppSettings
 
-
+config = AppSettings()
 
 class CustomImage(AbstractImage):
     blob_url = models.URLField(blank=True, null=True)
@@ -25,28 +27,27 @@ class CustomImage(AbstractImage):
         This method checks if the image has a blob_url. If not, it uploads the image content
         using the default storage backend (which should be VercelBlobStorage).
         """
-        print("save method called")
-        
         if not self.blob_url:
-            # Eviter une boucle infinie en vérifiant si on est déjà en train de faire un upload
+            # Utiliser le backend de stockage par défaut pour sauvegarder l'image
             try:
-                # Utiliser le backend de stockage par défaut pour sauvegarder l'image
                 file_name = self.file.name
                 if isinstance(self.file, File):
                     self.file.seek(0)  # S'assurer que le fichier est lu depuis le début
+                    content = ContentFile(self.file.read())  # Convertir le contenu en ContentFile
 
-                # Appel à default_storage pour l'upload
-                uploaded_url = default_storage.save(file_name, self.file)
+                # Appel à default_storage pour uploader l'image et récupérer le nom du fichier stocké
+                stored_name = default_storage.save(file_name, content)
+
+                # Appel à default_storage.url pour obtenir l'URL complète de l'image stockée
+                self.blob_url = default_storage.url(stored_name)
                 
-                print(uploaded_url)
-                
-                if uploaded_url:
-                    self.blob_url = uploaded_url
-                else:
-                    raise Exception("L'URL d'upload n'a pas été obtenue.")
-                    
+                print(f"Image uploaded to Vercel Blob Store : {self.blob_url}")
+
             except Exception as e:
-                raise Exception(f"(1) Erreur lors de l'upload sur Vercel Blob Store : {e}")
+                raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store : {e}")
+
+        # Sauvegarder dans la base de données
+        super().save(*args, **kwargs)
 
         # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
@@ -56,7 +57,6 @@ class CustomImage(AbstractImage):
         """
         Override the default file URL to use blob_url.
         """
-        print(self.blob_url)
         return self.blob_url or super().file.url
 
     def delete(self, *args, **kwargs):
