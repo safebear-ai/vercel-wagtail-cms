@@ -135,14 +135,19 @@ DATABASES = {
 }
 
 # Backend configuration
+
 STORAGES = {
     "default": {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
-    "staticfiles": {
+    "media": {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
+
 
 # print("ENVIRONMENT:", os.getenv("ENVIRONMENT"))
 
@@ -186,7 +191,7 @@ STATICFILES_FINDERS: list[str] = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
 
 # Répertoire temporaire pour les fichiers
