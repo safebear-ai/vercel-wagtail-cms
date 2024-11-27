@@ -197,7 +197,7 @@ STATICFILES_FINDERS: list[str] = [
 
 # STATIC_URL = STATIC_HOST + "/static/"
 STATIC_URL = "/static/"
-STATICFILES_DIRS = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / "website" /"static"]
 STATIC_ROOT: str = BASE_DIR / "staticfiles"
 
 
