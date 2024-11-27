@@ -22,7 +22,6 @@ class AppSettings(BaseSettings):
     
     # Configuration du Blob Store
     blob_read_write_token: str
-    blob_bucket: str
 
     # Configuration API ou autre
     api_base_url: str = "https://blob.vercel-storage.com"
