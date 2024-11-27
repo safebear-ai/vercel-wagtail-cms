@@ -16,7 +16,7 @@
             }
         }
     ],
-    "buildCommand": "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --no-input",
+    "buildCommand": "pip install -r requirements.txt && bash build_files.sh",
     "routes": [
         {
             "src": "/static/(.*)",
