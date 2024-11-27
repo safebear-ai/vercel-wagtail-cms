@@ -1,5 +1,4 @@
 {
-    "buildCommand": "./build_file.sh",
     "builds": [
         {
             "src": "mysite/wsgi.py",
@@ -7,6 +6,13 @@
             "config": {
                 "maxLambdaSize": "15mb",
                 "runtime": "python3.12"
+            }
+        },
+        {
+            "src": "build_file.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles"
             }
         }
     ],
