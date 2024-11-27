@@ -20,7 +20,6 @@ from mysite.config import AppSettings
 
 from mysite.storage_backend.blob_storage import VercelBlobStorage
 
-print(default_storage)
 
 # Charger les paramètres
 config = AppSettings()
@@ -130,7 +129,7 @@ DATABASES = {
     "default": dj_database_url.parse(
         config.database_url,
         conn_max_age=600,
-        ssl_require=False if os.getenv("ENVIRONMENT") == "local" else True,
+        ssl_require= True,
     )
 }
 
@@ -197,7 +196,9 @@ STATICFILES_FINDERS: list[str] = [
 
 # STATIC_URL = STATIC_HOST + "/static/"
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "website" /"static"]
+
+# STATICFILES_DIRS = [BASE_DIR / "website" /"static"]
+
 STATIC_ROOT: str = BASE_DIR / "staticfiles"
 
 
