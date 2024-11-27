@@ -195,11 +195,9 @@ STATICFILES_FINDERS: list[str] = [
 # STATIC_HOST = "vercel-django-integration-jonz9ypl8-leolchalots-projects.vercel.app" if not DEBUG else ""
 
 # STATIC_URL = STATIC_HOST + "/static/"
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Assurez-vous que c'est bien la destination des fichiers collectés
 
-# STATICFILES_DIRS = [BASE_DIR / "website" /"static"]
-
-STATIC_ROOT: str = BASE_DIR / "staticfiles"
 
 
 
