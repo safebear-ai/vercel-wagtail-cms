@@ -191,7 +191,7 @@ STATICFILES_FINDERS: list[str] = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATIC_URL = "/static/"
+STATIC_URL = "/staticfiles/"
 STATIC_ROOT: str = os.path.join(BASE_DIR, "staticfiles")
 
 # Répertoire temporaire pour les fichiers
