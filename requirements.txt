@@ -39,6 +39,7 @@ openpyxl==3.1.5
 pillow==10.4.0
 pillow_heif==0.20.0
 psycopg==3.2.3
+psycopg2-binary==2.9.10
 pydantic==2.9.2
 pydantic-settings==2.6.1
 pydantic_core==2.23.4
