@@ -13,6 +13,10 @@
         {
             "src": "/(.*)",
             "dest": "mysite/wsgi.py"
+        },
+        {
+            "src": "/staticfiles/(.*)",
+            "dest": "/staticfiles/$1"
         }
     ]
 }
