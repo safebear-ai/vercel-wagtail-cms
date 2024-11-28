@@ -2,52 +2,40 @@
 Create or customize your page models here.
 """
 
-from coderedcms.blocks import HTML_STREAMBLOCKS
-from coderedcms.blocks import LAYOUT_STREAMBLOCKS
-from coderedcms.blocks import BaseBlock
-from coderedcms.blocks import BaseLinkBlock
-from coderedcms.blocks import LinkStructValue
+from coderedcms.blocks import (
+    HTML_STREAMBLOCKS,
+    LAYOUT_STREAMBLOCKS,
+    BaseBlock,
+    BaseLinkBlock,
+    LinkStructValue,
+)
 from coderedcms.forms import CoderedFormField
-from coderedcms.models import CoderedArticleIndexPage
-from coderedcms.models import CoderedArticlePage
-from coderedcms.models import CoderedEmail
-from coderedcms.models import CoderedEventIndexPage
-from coderedcms.models import CoderedEventOccurrence
-from coderedcms.models import CoderedEventPage
-from coderedcms.models import CoderedFormPage
-from coderedcms.models import CoderedLocationIndexPage
-from coderedcms.models import CoderedLocationPage
-from coderedcms.models import CoderedWebPage
-from custom_media.models import CustomImage
-from custom_user import models as custom_user_models
+from coderedcms.models import (
+    CoderedArticleIndexPage,
+    CoderedArticlePage,
+    CoderedEmail,
+    CoderedEventIndexPage,
+    CoderedEventOccurrence,
+    CoderedEventPage,
+    CoderedFormPage,
+    CoderedLocationIndexPage,
+    CoderedLocationPage,
+    CoderedWebPage,
+)
 from django.db import models
 from modelcluster.fields import ParentalKey
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail.snippets.models import register_snippet
-from wagtail.images.models import Image, AbstractImage, AbstractRendition
-from wagtail.images import get_image_model_string
-import requests
-import os
 
-from django.conf import settings
+
 
 
 class ArticlePage(CoderedArticlePage):
     """
     Article, suitable for news or blog content.
     """
-    custom_cover_image = models.ForeignKey(
-        CustomImage,  # Modèle CustomImage
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",  # Empêche la création d'une relation inverse
-        verbose_name="Cover Image",
-        help_text="Choisissez une image de couverture pour cet article.",
-    )
-
 
     class Meta:
         verbose_name = "Article"
@@ -58,7 +46,6 @@ class ArticlePage(CoderedArticlePage):
 
     template = "coderedcms/pages/article_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
-    
 
 
 class ArticleIndexPage(CoderedArticleIndexPage):

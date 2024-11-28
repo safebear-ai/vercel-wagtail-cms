@@ -23,8 +23,10 @@ class AppSettings(BaseSettings):
     # Configuration du Blob Store
     blob_read_write_token: str
 
-    # Configuration API ou autre
-    api_base_url: str = "https://blob.vercel-storage.com"
+    # API
+    blob_bucket: str = "gqb3dhg6ajkwelj6"
+    blob_base_url: str = f"https://{blob_bucket}.public.blob.vercel-storage.com"
+    
 
     class Config:
         env_file: str = f".env.{os.getenv('ENVIRONMENT', "development")}"

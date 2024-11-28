@@ -4,14 +4,17 @@ from wagtail.images import get_image_model
 
 Image = get_image_model()
 
+
 @hooks.register("construct_image_chooser_queryset")
-def include_blob_url_in_chooser_queryset(queryset, request):
+def include_url_in_chooser_queryset(queryset, request):
     """
-    Ajoute une annotation distincte pour éviter les conflits avec le champ blob_url.
+    Ajoute une annotation distincte pour éviter les conflits avec le champ url.
     """
-    # Vérifiez que blob_url est un champ valide du modèle
-    if hasattr(Image, "blob_url"):
-        print("Annotating queryset with custom_blob_url")
-        return queryset.annotate(custom_blob_url=F("blob_url"))  # Utilisez un autre nom pour l'annotation
-    print("No blob_url in model")
+    # Vérifiez que url est un champ valide du modèle
+    if hasattr(Image, "url"):
+        print("Annotating queryset with custom_url")
+        return queryset.annotate(
+            custom_url=F("url")
+        )  # Utilisez un autre nom pour l'annotation
+    print("No url in model")
     return queryset

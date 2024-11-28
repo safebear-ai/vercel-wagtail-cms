@@ -1,8 +1,0 @@
-{% load i18n wagtailadmin_tags wagtailimages_tags %}
-{% rawformattedfield field=field %}
-    <a href="{{ image.blob_url }}">{% icon name="image" classname="default" %}{{ image.filename }}</a> 
-    ({{ image.width }}x{{ image.height }})<br /><br />
-
-    {% trans "Change image file:" %}
-    {{ field }}
-{% endrawformattedfield %}
