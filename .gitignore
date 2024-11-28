@@ -409,3 +409,4 @@ cache/
 
 ./**/migrations/
 .vercel
+.env*.local

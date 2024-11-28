@@ -12,15 +12,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
-from urllib.parse import parse_qsl, urlencode, urlparse
 
 import dj_database_url
-from django.core.files.storage import FileSystemStorage, default_storage
 
 from mysite.config import AppSettings
-
-from mysite.storage_backend.blob_storage import VercelBlobStorage
-
 
 # Charger les paramètres
 config = AppSettings()
@@ -29,9 +24,6 @@ config = AppSettings()
 
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
-
-# settings.py
-DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStorage"
 
 
 # Quick-start development settings - unsuitable for production
@@ -125,7 +117,6 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-
 # Database configuration
 # database_url = os.getenv("DATABASE_URL_OPTION")
 database_url = config.database_url
@@ -135,17 +126,15 @@ DATABASES = {
     "default": dj_database_url.parse(
         database_url,
         conn_max_age=600,
-        ssl_require= True,
+        ssl_require=True,
     )
 }
 
-
-
+# Backend configuration
+DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStorage"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Backend configuration
-
-STORAGES = {
+STORAGES: dict[str, dict[str, str]] = {
     "default": {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
@@ -153,7 +142,7 @@ STORAGES = {
         "BACKEND": DEFAULT_FILE_STORAGE,
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": STATICFILES_STORAGE,
     },
 }
 
@@ -203,18 +192,17 @@ STATICFILES_FINDERS: list[str] = [
 # STATIC_HOST = "vercel-django-integration-jonz9ypl8-leolchalots-projects.vercel.app" if not DEBUG else ""
 
 # STATIC_URL = STATIC_HOST + "/static/"
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Assurez-vous que c'est bien la destination des fichiers collectés
-
-
+STATIC_URL = "static/"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "website/static"),)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Répertoire temporaire pour les fichiers
 TEMP_DIR = "/tmp"
 
 # Fichiers médias
-MEDIA_ROOT = TEMP_DIR
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = TEMP_DIR
+# MEDIA_URL = "/media/"
 
 # Login
 

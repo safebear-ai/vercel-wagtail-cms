@@ -101,7 +101,6 @@ class CustomRendition(AbstractRendition):
         CustomImage, on_delete=models.CASCADE, related_name="renditions"
     )
 
-    # 
     def save(self, *args, **kwargs):
         # Added method for updating rendition URLs after CustomImage update
         if self.image.blob_url:
