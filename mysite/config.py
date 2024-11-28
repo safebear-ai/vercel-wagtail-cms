@@ -11,16 +11,27 @@ class AppSettings(BaseSettings):
     version: str = "1.0.0"
     environment: str
 
-    # Configuration de la base de données
+    # Database configuration variables
     database_url: str
+    database_url_unpooled: str = ""
     pghost: str
-    pguser: str
-    pgpassword: str
+    pghost_unpooled: str
     pgdatabase: str
+    pgpassword: str
+    pguser: str
+    postgres_database: str
+    postgres_host: str
+    postgres_password: str
+    postgres_prisma_url: str
+    postgres_url: str
+    postgres_url_non_pooling: str
+    postgres_url_no_ssl: str
+    postgres_user: str
+    
     database_port: int = 5432
     database_engine: str = "django.db.backends.postgresql"
     
-    # Configuration du Blob Store
+    # BlobStore configuration
     blob_read_write_token: str
 
     # API
