@@ -44,16 +44,16 @@
   </div>
   {% include "coderedcms/includes/pagination.html" with items=index_paginated %}
 </div>
-       {% with tags=article.tags.all %}
-          {% if tags %}
-            <div class="tags">
-              <h3>Tags</h3>
-              {% for tag in tags %}
-                  <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
-              {% endfor %}
-            </div>
-            {% endif %}
-        {% endwith %}
+  {% with tags=article.tags.all %}
+     {% if tags %}
+       <div class="tags">
+         <h3>Tags</h3>
+         {% for tag in tags %}
+             <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
+         {% endfor %}
+       </div>
+       {% endif %}
+  {% endwith %}
 <br>
 {% endif %}
 {% endblock %}
