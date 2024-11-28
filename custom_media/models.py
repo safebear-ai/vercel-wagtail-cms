@@ -14,7 +14,7 @@ from mysite.config import AppSettings
 config = AppSettings()
 
 class CustomImage(AbstractImage):
-    blob_url = models.URLField(blank=True, null=True)
+    blob_url = models.URLField(max_length=500,blank=True, null=True)
     admin_form_fields = Image.admin_form_fields + (
         'blob_url',
     )
@@ -27,31 +27,40 @@ class CustomImage(AbstractImage):
         This method checks if the image has a blob_url. If not, it uploads the image content
         using the default storage backend (which should be VercelBlobStorage).
         """
+
         if not self.blob_url:
-            # Utiliser le backend de stockage par défaut pour sauvegarder l'image
+            # Use the default storage backend to save the image
             try:
                 file_name = self.file.name
                 if isinstance(self.file, File):
-                    self.file.seek(0)  # S'assurer que le fichier est lu depuis le début
-                    content = ContentFile(self.file.read())  # Convertir le contenu en ContentFile
-
-                # Appel à default_storage pour uploader l'image et récupérer le nom du fichier stocké
-                stored_name = default_storage.save(file_name, content)
-
-                # Appel à default_storage.url pour obtenir l'URL complète de l'image stockée
-                self.blob_url = default_storage.url(stored_name)
+                    try:
+                        self.file.seek(0)  # Make sure the file is read from the beginning
+                        content = self.file.read()
                 
-                print(f"Image uploaded to Vercel Blob Store : {self.blob_url}")
+                        # Check if the content is a bytes object
+                        if not isinstance(content, bytes):
+                            raise ValueError("Le contenu du fichier n'a pas pu être converti en bytes.")
+                        
+                        # Create a ContentFile object from bytes for storage
+                        content_file = ContentFile(content)
+
+                    except Exception as e:
+                        raise Exception(f"Erreur lors de la lecture du fichier : {e}")
+                else:
+                    raise ValueError("Le fichier n'est pas valide.")
+                    
+                # Call default_storage to upload image and retrieve stored file name
+                upload_result: str = default_storage.save(file_name, content_file)
+
+                # Call to default_storage.url to obtain the full URL of the stored image
+                self.blob_url: str = default_storage.url(upload_result)
 
             except Exception as e:
-                raise Exception(f"Erreur lors de l'upload sur Vercel Blob Store : {e}")
+                raise Exception(f"[CustomImage] Erreur lors de l'upload sur Vercel Blob Store : {e}")
 
         # Sauvegarder dans la base de données
         super().save(*args, **kwargs)
 
-        # Sauvegarder dans la base de données
-        super().save(*args, **kwargs)
-    
     @property
     def get_image_url(self):
         """
@@ -66,11 +75,12 @@ class CustomImage(AbstractImage):
         """
         try:
             if self.blob_url:
+                print(f"Suppression de l'image dans le Blob Store : {self.blob_url}")
                 default_storage.delete(self.blob_url)
         except Exception as e:
             print(f"Erreur lors de la suppression de l'image dans le Blob Store : {e}")
 
-        # Supprimer l'entrée de la base de données
+        # Delete entry from database
         super().delete(*args, **kwargs)
 
 class CustomImageTag(models.Model):
@@ -90,6 +100,13 @@ class CustomRendition(AbstractRendition):
     image = models.ForeignKey(
         CustomImage, on_delete=models.CASCADE, related_name="renditions"
     )
+
+    # 
+    def save(self, *args, **kwargs):
+        # Added method for updating rendition URLs after CustomImage update
+        if self.image.blob_url:
+            self.blob_url = self.image.blob_url
+        super().save(*args, **kwargs)
 
     class Meta:
         unique_together = (("image", "filter_spec", "focal_point_key"),)
