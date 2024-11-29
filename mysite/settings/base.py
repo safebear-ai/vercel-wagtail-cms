@@ -130,8 +130,19 @@ DATABASES = {
 }
 
 # Backend configuration
+
+# STATIC_URL = STATIC_HOST + "/static/"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    BASE_DIR / "website/static/website",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStore"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 STORAGES: dict[str, dict[str, str]] = {
     "default": {
@@ -189,11 +200,6 @@ STATICFILES_FINDERS: list[str] = [
 ]
 
 # STATIC_HOST = "vercel-django-integration-jonz9ypl8-leolchalots-projects.vercel.app" if not DEBUG else ""
-
-# STATIC_URL = STATIC_HOST + "/static/"
-STATIC_URL = "static/"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "website/static"),)
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Répertoire temporaire pour les fichiers
