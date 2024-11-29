@@ -92,6 +92,7 @@ MIDDLEWARE: list[str] = [
 ]
 
 ROOT_URLCONF = "mysite.urls"
+AUTH_USER_MODEL = "custom_user.User"
 
 TEMPLATES = [
     {
@@ -166,7 +167,7 @@ AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
     },
 ]
 
-AUTH_USER_MODEL = "custom_user.User"
+
 
 
 # Internationalization

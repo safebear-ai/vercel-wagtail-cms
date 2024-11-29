@@ -38,23 +38,35 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):  # type: ignore
+
+
+class User(AbstractUser):
     """
     A custom user model, which uses email instead of username as
     the identifier.
     """
-
-    username = None  # type: ignore
+    username = None
 
     email = models.EmailField(
         _("email address"),
         unique=True,
         error_messages={
-            "unique": _("A user with that username already exists."),
+            "unique": _("A user with that email address already exists."),
         },
     )
 
-    objects = UserManager()  # type: ignore
+    avatar = models.ImageField(
+        upload_to='avatar_images/',
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name=_("Profile Picture")
+    )
+
+    objects = UserManager()  # Assurez-vous d'avoir un UserManager défini pour gérer les utilisateurs
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email

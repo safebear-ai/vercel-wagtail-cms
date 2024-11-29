@@ -7,6 +7,16 @@
     {% if self.caption %}
     <p class="lead">{{self.caption}}</p>
     {% endif %}
+    <p>
+      {% if self.author %}
+      <img class="article-author-img rounded-circle me-2" src="{% avatar_url self.author %}">
+      {% endif %}
+      {% if self.seo_author %}
+      <span class="article-author">{{self.seo_author}}</span>
+      <span class="mx-2">&bull;</span>
+      {% endif %}
+      <span class="article-date">{{ self.seo_published_at }}</span>
+    </p>
   </div>
   {% endblock %} 
   {% block article_cover_image %}
