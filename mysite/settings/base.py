@@ -29,11 +29,10 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-if config.debug:
-    ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "[::1]"]
-else:
-    ALLOWED_HOSTS: list[str] = ["vercel-django-ashen.vercel.app", ".vercel.app"]
 
+ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1", "[::1]", "now.sh", ".vercel.app"]
+
+print(ALLOWED_HOSTS)
 # Application definition
 
 INSTALLED_APPS: list[str] = [
