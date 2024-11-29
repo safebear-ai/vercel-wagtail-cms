@@ -132,7 +132,7 @@ DATABASES = {
 # Backend configuration
 
 # STATIC_URL = STATIC_HOST + "/static/"
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / "website/static/website",
