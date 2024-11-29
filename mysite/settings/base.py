@@ -132,7 +132,7 @@ DATABASES = {
 
 # Backend configuration
 DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStore"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STORAGES: dict[str, dict[str, str]] = {
     "default": {
