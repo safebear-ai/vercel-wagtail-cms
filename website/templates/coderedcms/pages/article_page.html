@@ -1,5 +1,5 @@
-{% extends "coderedcms/pages/web_page.html" %} {% load wagtailadmin_tags
-wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block content %}
+{% extends "coderedcms/pages/web_page.html" %} 
+{% load wagtailadmin_tags wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block content %}
 <article class="crx-article">
   {% block article_header %}
   <div class="container my-4 text-center">
@@ -11,18 +11,16 @@ wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block content %}
   {% endblock %} 
   {% block article_cover_image %}
   <div class="container mb-5">
-    {% if self.cover_image %}
-    <div class="cover_image w-100">
-      <img
-        alt=""
-        class="show-transparency fill-800x450 format-webp preserve-svg"
-        height="92"
-        src="{{ self.cover_image.url }}"
-        width="165"
-      />
-    </div>
-    <img src="{{ image.url }}" class="rounded w-75 m-auto d-block" />
-    {% endif %}
+  {% if self.cover_image %}
+  <div class="cover_image w-100">
+    {% image self.cover_image fill-800x450 as img %}
+    <img
+      alt="{{ img.alt }}"
+      class="show-transparency fill-800x450 format-webp preserve-svg w-100 rounded"
+      src="{{ img.url }}"
+    />
+  </div>
+  {% endif %}
     <nav
       style="
         --bs-breadcrumb-divider: url(
@@ -51,6 +49,11 @@ wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block content %}
   {% endblock %}
 
   {% block article_body %}
+
+  <div style="text-align: justify" class="container mx-auto article-body">
+      {{ page.body }}
+  </div>
+
   
   <div style="text-align: justify" class="container mx-auto article-body">
     <p class="m-3"><a href="{{ page.get_parent.url }}">Retour au blog</a></p>
@@ -68,7 +71,8 @@ wagtailcore_tags wagtailimages_tags coderedcms_tags %} {% block content %}
             href="{{ page.get_parent.url }}?tag={{ tag }}"
             style="text-decoration: underline"
             >{{ tag }}</a
-          >{% if not forloop.last %} / {% endif %} {% endfor %}
+          >{% if not forloop.last %} / {% endif %} 
+          {% endfor %}
         </p>
 
         <div class="d-flex justify-content-center mt-3">

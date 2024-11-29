@@ -47,7 +47,6 @@ class VercelBlobStore(Storage):
         response = vercel_blob.delete(f"{MEDIA_URL}{name}", options={"token": self.vercel_token})
         print(json.dumps(response, indent=4))
 
-
     def exists(self, name):
         """Return True if a file referenced by the given name already exists in the storage system."""
         response = requests.head(f"{self.blob_base_url}/{name}", headers=self._get_headers())

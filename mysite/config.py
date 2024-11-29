@@ -40,7 +40,7 @@ class AppSettings(BaseSettings):
     
 
     class Config:
-        env_file: str = f".env.{os.getenv('ENVIRONMENT', "development")}"
+        env_file: str = f".env.{os.getenv('ENVIRONMENT', "local")}"
         env_file_encoding: str = "utf-8"
         print(f"Chargement des paramètres depuis le fichier {env_file}")
         
