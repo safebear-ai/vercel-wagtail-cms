@@ -70,8 +70,11 @@ class VercelBlobStore(Storage):
         return int(response.headers.get('Content-Length', 0))
 
     def url(self, name):
-        """Return an absolute URL where the file's contents can be accessed directly by a web browser."""
-        return f"https://gqb3dhg6ajkwelj6.public.blob.vercel-storage.com/images/{name}"
+        # """Return an absolute URL where the file's contents can be accessed directly by a web browser."""
+        file_path = f"{MEDIA_URL}{name}"
+        print(f"media url: {file_path}")
+        # URL pour les documents
+        return file_path
     
     def get_blob_metadata(self, name):
         response = vercel_blob.head(f"{self.blob_base_url}/{name}")
