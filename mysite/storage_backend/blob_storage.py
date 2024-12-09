@@ -31,6 +31,7 @@ class VercelBlobStore(Storage):
         
         print(json.dumps(response, indent=4)) # print the response
         print(response["url"].split("/")[-1])
+        print(response["url"])
         return response["url"].split("/")[-1]
     
     def _open(self, name, mode='rb'):
