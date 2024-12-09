@@ -407,7 +407,9 @@ cache/
 /db.sqlite3
 /poetry.lock
 /requirements-dev.txt
-/.venv
+.venv/
+poetry.lock
+
 
 ./**/migrations/
 .vercel
