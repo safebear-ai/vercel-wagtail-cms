@@ -30,8 +30,9 @@ class VercelBlobStore(Storage):
         response = vercel_blob.put(path=name, data=content, options={"token": self.vercel_token})
         
         print(json.dumps(response, indent=4)) # print the response
-        print(response["url"].split("/")[-1])
-        return response["url"].split("/")[-1]
+        original_file_name = response["url"].split("/")[-2]
+        print(original_file_name + "/" + response["url"].split("/")[-1])
+        return original_file_name + "/" + response["url"].split("/")[-1]
     
     def _open(self, name, mode='rb'):
         """Retrieve the specified file from storage."""
@@ -70,7 +71,10 @@ class VercelBlobStore(Storage):
 
     def url(self, name):
         """Return an absolute URL where the file's contents can be accessed directly by a web browser."""
-        return f"https://gqb3dhg6ajkwelj6.public.blob.vercel-storage.com/images/{name}"
+        file_path = f"{MEDIA_URL}{name}"
+        print(f"media url: {file_path}")
+        # URL pour les documents
+        return file_path
     
     def get_blob_metadata(self, name):
         response = vercel_blob.head(f"{self.blob_base_url}/{name}")
