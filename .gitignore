@@ -401,7 +401,6 @@ cache/
 /media/
 
 # Collected static files
-/static/
 /db.sqlite3
 /poetry.lock
 /requirements-dev.txt

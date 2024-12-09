@@ -133,12 +133,9 @@ DATABASES = {
 
 # STATIC_URL = STATIC_HOST + "/static/"
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    BASE_DIR / "website/static/website",
-]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATIC_ROOT = BASE_DIR / "static"
 
 DEFAULT_FILE_STORAGE = "mysite.storage_backend.blob_storage.VercelBlobStore"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
