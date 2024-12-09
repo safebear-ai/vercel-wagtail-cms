@@ -205,7 +205,8 @@ TEMP_DIR = "/tmp"
 # Fichiers médias
 # MEDIA_ROOT = TEMP_DIR
 MEDIA_URL = "https://gqb3dhg6ajkwelj6.public.blob.vercel-storage.com/original_images/"
-DOCUMENT_URL = "https://gqb3dhg6ajkwelj6.public.blob.vercel-storage.com/documents/"
+DOCUMENTS_URL = "https://gqb3dhg6ajkwelj6.public.blob.vercel-storage.com/documents/"
+DOCUMENTS_ROOT = os.path.join(BASE_DIR, "documents/")
 
 
 # Login

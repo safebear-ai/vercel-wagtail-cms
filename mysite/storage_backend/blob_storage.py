@@ -6,7 +6,7 @@ import vercel_blob
 from django.core.files.base import File
 from django.core.files.storage import Storage
 from django.core.files.base import ContentFile
-from mysite.settings.base import MEDIA_URL, DOCUMENT_URL
+from mysite.settings.base import MEDIA_URL
 from mysite.config import AppSettings
 
 config: AppSettings = AppSettings()
@@ -37,17 +37,9 @@ class VercelBlobStore(Storage):
         """Retrieve the specified file from storage."""
         print(f"Opening file: {MEDIA_URL}{name}")
         file_url = f"{MEDIA_URL}{name}"
-        
-        doc_url: str = f"{DOCUMENT_URL}{name}"
-        
         response = requests.get(file_url)
         if response.status_code != 200:
-            print(f"Unable to retrieve media '{name}' from Vercel Blob Store.")
-        
-        response = requests.get(doc_url)
-        if response.status_code != 200:
-            print(f"Unable to retrieve document '{name}' from Vercel Blob Store.")
-            
+            raise FileNotFoundError(f"Unable to retrieve file '{name}' from Vercel Blob Store.")
         return File(BytesIO(response.content), name)
 
     def delete(self, name):
