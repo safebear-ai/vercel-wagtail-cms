@@ -30,9 +30,9 @@ class VercelBlobStore(Storage):
         response = vercel_blob.put(path=name, data=content, options={"token": self.vercel_token})
         
         print(json.dumps(response, indent=4)) # print the response
-        print(response["url"].split("/")[-1])
-        print(response["url"])
-        return response["url"].split("/")[-1]
+        original_file_name = response["url"].split("/")[-2]
+        print(original_file_name + "/" + response["url"].split("/")[-1])
+        return original_file_name + "/" + response["url"].split("/")[-1]
     
     def _open(self, name, mode='rb'):
         """Retrieve the specified file from storage."""
