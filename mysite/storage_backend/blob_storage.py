@@ -15,7 +15,7 @@ BLOB_READ_WRITE_TOKEN: str = config.blob_read_write_token
 
 class VercelBlobStore(Storage):
     """
-    Custom Django Storage backend for Vercel Blob Store.
+    Custom Django Storage backend for Vercel Blob Store
     """
     def __init__(self):
         self.vercel_token = config.blob_read_write_token
