@@ -1,11 +1,9 @@
 from io import BytesIO
 import json
-import os
 import requests
 import vercel_blob
 from django.core.files.base import File
 from django.core.files.storage import Storage
-from django.core.files.base import ContentFile
 from mysite.settings.base import MEDIA_URL
 from mysite.config import AppSettings
 
