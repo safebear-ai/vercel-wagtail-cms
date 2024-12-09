@@ -39,19 +39,14 @@ class VercelBlobStore(Storage):
         file_url = f"{MEDIA_URL}{name}"
         
         doc_url: str = f"{DOCUMENT_URL}{name}"
-        try:
-            response = requests.get(file_url)
-            if response.status_code != 200:
-                raise FileNotFoundError(f"Unable to retrieve media '{name}' from Vercel Blob Store.")
-        except requests.exceptions.RequestException as e:
-            raise FileNotFoundError(f"Unable to retrieve media '{name}' from Vercel Blob Store.")
         
-        try:
-            response = requests.get(doc_url)
-            if response.status_code != 200:
-                raise FileNotFoundError(f"Unable to retrieve document '{name}' from Vercel Blob Store.")
-        except requests.exceptions.RequestException as e:
-            raise FileNotFoundError(f"Unable to retrieve document '{name}' from Vercel Blob Store.")
+        response = requests.get(file_url)
+        if response.status_code != 200:
+            print(f"Unable to retrieve media '{name}' from Vercel Blob Store.")
+        
+        response = requests.get(doc_url)
+        if response.status_code != 200:
+            print(f"Unable to retrieve document '{name}' from Vercel Blob Store.")
             
         return File(BytesIO(response.content), name)
 
