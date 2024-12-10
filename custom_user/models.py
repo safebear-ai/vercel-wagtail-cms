@@ -55,13 +55,13 @@ class User(AbstractUser):
         },
     )
 
-    # avatar = models.ImageField(
-    #     upload_to='avatar_images/',
-    #     max_length=255,
-    #     blank=True,
-    #     null=True,
-    #     verbose_name=_("Profile Picture")
-    # )
+    avatar = models.ImageField(
+        upload_to='avatar_images/',
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name=_("Profile Picture")
+    )
 
     objects = UserManager()  # Assurez-vous d'avoir un UserManager défini pour gérer les utilisateurs
 

@@ -7,7 +7,6 @@ tasks:
     cmds:
       - "poetry shell"
       - "poetry config virtualenvs.in-project true"
-      - "poetry lock"
       - "poetry install"
       - "npm i"
       - "poetry export -f requirements.txt --output requirements.txt"
