@@ -52,7 +52,7 @@ class VercelBlobStore(Storage):
     def delete(self, name):
         """Delete the specified file from the storage system."""
         response = vercel_blob.delete(
-            f"{MEDIA_URL}{name}", options={"token": self.vercel_token}
+            url=f"{MEDIA_URL}{name}", options={"token": self.vercel_token}
         )
         print(json.dumps(response, indent=4))
 
