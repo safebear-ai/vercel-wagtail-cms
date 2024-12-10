@@ -37,7 +37,6 @@ print(ALLOWED_HOSTS)
 
 INSTALLED_APPS: list[str] = [
     # This project
-    "custom_user",
     "blog",
     # Wagtail CRX (CodeRed Extensions)
     "coderedcms",
@@ -91,7 +90,6 @@ MIDDLEWARE: list[str] = [
 ]
 
 ROOT_URLCONF = "safebear_cms.urls"
-AUTH_USER_MODEL = "custom_user.User"
 
 TEMPLATES = [
     {
