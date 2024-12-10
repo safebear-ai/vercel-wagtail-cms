@@ -1,4 +1,5 @@
 {
+    "buildCommand": "poetry install",
     "builds": [
         {
             "src": "safebear_cms/wsgi.py",

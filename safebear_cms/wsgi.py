@@ -9,17 +9,17 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 
 import os
 
-
+from django.core.handlers.wsgi import WSGIHandler
 from django.core.wsgi import get_wsgi_application
-from dotenv import load_dotenv
 
-load_dotenv()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "safebear_cms.settings.prod")
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cms.settings.prod")
+application: WSGIHandler = get_wsgi_application()
 
-application = get_wsgi_application()
-
-try:
-    app = get_wsgi_application()
-except ImportError:
-    pass
+app = application
+# try:
+#     from django.core.wsgi import get_wsgi_application
+#     application: WSGIHandler = get_wsgi_application()
+#     app: WSGIHandler = get_wsgi_application()
+# except ImportError:
+#     pass
