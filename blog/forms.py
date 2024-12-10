@@ -6,8 +6,8 @@ from vercel_blob import VercelBlob
 from django.utils.translation import gettext_lazy as _
 
 from custom_user.models import User
-from cms.config import AppSettings
-from cms.storage_backend.blob_storage import VercelBlobStore
+from safebear_cms.config import AppSettings
+from safebear_cms.storage_backend.blob_storage import VercelBlobStore
 
 config: AppSettings = AppSettings()
 

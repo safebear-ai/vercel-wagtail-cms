@@ -40,7 +40,7 @@ class ArticlePage(CoderedArticlePage):
         ordering = ["-first_published_at"]
 
     # Only allow this page to be created beneath an ArticleIndexPage.
-    parent_page_types = ["safebear_cms.ArticleIndexPage"]
+    parent_page_types = ["blog.ArticleIndexPage"]
 
     template = "coderedcms/pages/article_page.html"
     search_template = "coderedcms/pages/article_page.search.html"
@@ -65,10 +65,10 @@ class ArticleIndexPage(CoderedArticleIndexPage):
         verbose_name = "Article Landing Page"
 
     # Override to specify custom index ordering choice/default.
-    index_query_pagemodel = "safebear_cms.ArticlePage"
+    index_query_pagemodel = "blog.ArticlePage"
 
     # Only allow ArticlePages beneath this page.
-    subpage_types = ["safebear_cms.ArticlePage"]
+    subpage_types = ["blog.ArticlePage"]
 
     template = "coderedcms/pages/article_index_page.html"
 
@@ -77,7 +77,7 @@ class EventPage(CoderedEventPage):
     class Meta:
         verbose_name = "Event Page"
 
-    parent_page_types = ["safebear_cms.EventIndexPage"]
+    parent_page_types = ["blog.EventIndexPage"]
     template = "coderedcms/pages/event_page.html"
 
 
@@ -89,10 +89,10 @@ class EventIndexPage(CoderedEventIndexPage):
     class Meta:
         verbose_name = "Events Landing Page"
 
-    index_query_pagemodel = "safebear_cms.EventPage"
+    index_query_pagemodel = "blog.EventPage"
 
     # Only allow EventPages beneath this page.
-    subpage_types = ["safebear_cms.EventPage"]
+    subpage_types = ["blog.EventPage"]
 
     template = "coderedcms/pages/event_index_page.html"
 
@@ -142,7 +142,7 @@ class LocationPage(CoderedLocationPage):
     template = "coderedcms/pages/location_page.html"
 
     # Only allow LocationIndexPages above this page.
-    parent_page_types = ["safebear_cms.LocationIndexPage"]
+    parent_page_types = ["blog.LocationIndexPage"]
 
 
 class LocationIndexPage(CoderedLocationIndexPage):
@@ -155,10 +155,10 @@ class LocationIndexPage(CoderedLocationIndexPage):
         verbose_name = "Location Landing Page"
 
     # Override to specify custom index ordering choice/default.
-    index_query_pagemodel = "safebear_cms.LocationPage"
+    index_query_pagemodel = "blog.LocationPage"
 
     # Only allow LocationPages beneath this page.
-    subpage_types = ["safebear_cms.LocationPage"]
+    subpage_types = ["blog.LocationPage"]
 
     template = "coderedcms/pages/location_index_page.html"
 
@@ -185,7 +185,7 @@ class NavbarLinkBlock(BaseLinkBlock):
     class Meta:
         icon = "link"
         label = "Link"
-        template = "safebear_cms/blocks/navbar_link.html"
+        template = "blog/blocks/navbar_link.html"
         value_class = LinkStructValue
 
 
@@ -197,7 +197,7 @@ class NavbarDropdownBlock(BaseBlock):
     class Meta:
         icon = "arrow-down"
         label = "Dropdown"
-        template = "safebear_cms/blocks/navbar_dropdown.html"
+        template = "blog/blocks/navbar_dropdown.html"
 
     title = blocks.CharBlock(
         max_length=255,

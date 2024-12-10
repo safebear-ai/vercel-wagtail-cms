@@ -37,8 +37,8 @@ print(ALLOWED_HOSTS)
 
 INSTALLED_APPS: list[str] = [
     # This project
-    "safebear_cms",
     "custom_user",
+    "blog",
     # Wagtail CRX (CodeRed Extensions)
     "coderedcms",
     "django_bootstrap5",
