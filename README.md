@@ -1,4 +1,4 @@
-# SafeBear website
+# SafeBear safebear_cms
 
 Code for site at: http://localhost
 
@@ -15,7 +15,7 @@ Open this directory in a command prompt, then:
 
 2. Build the Sass:
    ```
-   python manage.py sass -g website/static/website/src/custom.scss website/static/website/css/
+   python manage.py sass -g safebear_cms/static/safebear_cms/src/custom.scss safebear_cms/static/safebear_cms/css/
    ```
 
    To build the Sass automatically whenever you change a file, add the `--watch`
@@ -46,7 +46,7 @@ pytest .
 Before deploying, be sure to build the sass:
 
 ```
-python manage.py sass -t compressed website/static/website/src/custom.scss website/static/website/css/
+python manage.py sass -t compressed safebear_cms/static/safebear_cms/src/custom.scss safebear_cms/static/safebear_cms/css/
 ```
 
 
