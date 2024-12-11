@@ -7,7 +7,7 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 class AppSettings(BaseSettings):
     # # Paramètres de base
-    app_name: str = "cms"
+    app_name: str = "safebear_cms"
     debug: bool
 
     version: str = "1.0.0"
