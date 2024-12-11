@@ -10,6 +10,7 @@ tasks:
       - "poetry install"
       - "npm i"
       - "poetry export -f requirements.txt --output requirements.txt"
+      - "vercel env pull"
 
 
   collectstatic:
@@ -26,7 +27,6 @@ tasks:
   local:
     desc: "lancer en local"
     cmds:
-      - "vercel env pull"
       - "poetry run python manage.py runserver"
 
   build:
