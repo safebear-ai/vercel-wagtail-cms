@@ -1,22 +1,23 @@
 {
-  "builds": [
-      {
-          "src": "mysite/wsgi.py",
-          "use": "@vercel/python",
-          "config": {
-              "maxLambdaSize": "15mb",
-              "runtime": "python3.12"
-          }
-      }
-  ],
-  "routes": [
-      {
-          "src": "/(.*)",
-          "dest": "mysite/wsgi.py"
-      },
-      {
-          "src": "/static/(.*)",
-          "dest": "/staticfiles/$1"
-      }
-  ]
+    "buildCommand": "poetry install",
+    "builds": [
+        {
+            "src": "safebear_cms/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.12"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "safebear_cms/wsgi.py"
+        },
+        {
+            "src": "/static/(.*)",
+            "dest": "/staticfiles/$1"
+        }
+    ]
 }
