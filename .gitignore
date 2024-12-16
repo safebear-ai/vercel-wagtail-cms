@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io, modified for use with Wagtail CRX.
 ### Node
 ./node_modules
-
+node_modules
 
 #######################################
 ### Editors
