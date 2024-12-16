@@ -1,0 +1,49 @@
+version: "3"
+
+tasks:
+
+  install:
+    desc: "Installer les dépendances"
+    cmds:
+      - "poetry shell"
+      - "poetry config virtualenvs.in-project true"
+      - "poetry install"
+      - "npm i"
+      - "poetry export -f requirements.txt --output requirements.txt"
+      - "vercel env pull"
+
+
+  collectstatic:
+    desc: "Collecter les fichiers statiques"
+    cmds:
+      - "poetry run python manage.py collectstatic --noinput"
+
+  migrate:
+    desc: "Appliquer les migrations à la base de données"
+    cmds:
+      - "poetry run python manage.py makemigrations"
+      - "poetry run python manage.py migrate"
+
+  local:
+    desc: "lancer en local"
+    cmds:
+      - "poetry run python manage.py runserver"
+
+  build:
+    desc: "Préparer l'application pour le déploiement"
+    cmds:
+      - "task install"
+      - "task collectstatic"
+      - "task migrate"
+
+  deploy:
+    desc: "Déployer l'application sur Vercel"
+    cmds:
+      - "task build"
+      - "vercel"
+
+  deploy-local:
+    desc: "Déployer l'application sur Vercel"
+    cmds:
+      - "task build"
+      - "task local"

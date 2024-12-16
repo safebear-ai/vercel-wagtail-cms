@@ -1,10 +1,15 @@
 # Created by https://www.gitignore.io, modified for use with Wagtail CRX.
+### Node
+./node_modules
+
 
 #######################################
 ### Editors
 #######################################
-
-../venv
+.env.*
+./venv
+./package-lock.json
+./node_module/
 ### Emacs ###
 
 # -*- mode: gitignore; -*-
@@ -203,7 +208,7 @@ local_settings.py
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
-
+./staticfiles/
 
 ### Django.Python Stack ###
 
@@ -399,11 +404,13 @@ cache/
 /media/
 
 # Collected static files
-/static/
 /db.sqlite3
 /poetry.lock
 /requirements-dev.txt
-/.venv
+.venv/
+poetry.lock
+
 
 ./**/migrations/
 .vercel
+.env*.local

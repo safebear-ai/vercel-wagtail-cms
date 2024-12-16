@@ -1,67 +1,98 @@
-# SafeBear website
+# Readme
 
-Code for site at: http://localhost
+## wsgi.py
+```py
+import os
 
+from django.core.handlers.wsgi import WSGIHandler
+from django.core.wsgi import get_wsgi_application
 
-## Getting started
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "safebear_cms.settings.prod")
 
-Make sure Python 3.5 or higher is installed on your system.
-Open this directory in a command prompt, then:
+application: WSGIHandler = get_wsgi_application()
 
-1. Install the software, and the dev tooling:
-   ```
-   pip install -r requirements.txt -r requirements-dev.txt
-   ```
+app = application
+```
+---
+## Poetry cli
+```
+poetry export -f requirements.txt --output requirements.txt
+```
+---
+## Build the Sass:
 
-2. Build the Sass:
-   ```
-   python manage.py sass -g website/static/website/src/custom.scss website/static/website/css/
-   ```
+``` 
+python manage.py sass -g safebear_cms/static/safebear_cms/src/custom.scss safebear_cms/static/safebear_cms/css/
+```
 
-   To build the Sass automatically whenever you change a file, add the `--watch`
+   To build the Sass automatically whenever you change a file, add the --watch
    option and run it in a separate terminal. To build a compressed/minified
-   production version, add the `-t compressed` option. For more options, see
-   [django-sass](https://github.com/coderedcorp/django-sass/).
+   production version, add the -t compressed option. For more options, see
+   django-sass.
 
-3. Run the development server:
-   ```
-   python manage.py runserver
-   ```
+---
+## Tasks
 
-4. Go to http://localhost:8000/ in your browser, or http://localhost:8000/admin/
-   to log in and get to work!
+This project uses a `Taskfile` to automate key steps for managing and deploying a Django application with Wagtail.
 
+### `install`
+Installs dependencies and sets up the environment:
+- Activates Poetry virtual environment.
+- Installs Python and npm dependencies.
+- Exports `requirements.txt`.
+- Pulls environment variables from Vercel.
 
-## Linting / pre-deployment
+### `collectstatic`
+Collects static files for production:
+- Runs `python manage.py collectstatic --noinput`.
 
-To check for errors, run the following commands:
+### `migrate`
+Handles database migrations:
+- Runs `makemigrations` and `migrate`.
 
-```
-ruff check --fix .
-ruff format .
-mypy .
-pytest .
-```
+### `local`
+Starts the local Django development server:
+- Runs `python manage.py runserver`.
 
-Before deploying, be sure to build the sass:
+### `build`
+Prepares the app for deployment by running:
+1. `install`
+2. `collectstatic`
+3. `migrate`
 
-```
-python manage.py sass -t compressed website/static/website/src/custom.scss website/static/website/css/
-```
+### `deploy`
+Builds and deploys the app to Vercel:
+- Runs `build`.
+- Deploys using `vercel`.
 
-
-## Documentation links
-
-* To customize the content, design, and features of the site see
-  [Wagtail CRX](https://docs.coderedcorp.com/wagtail-crx/).
-
-* For deeper customization of backend code see
-  [Wagtail](http://docs.wagtail.io/) and
-  [Django](https://docs.djangoproject.com/).
-
-* For HTML template design see [Bootstrap](https://getbootstrap.com/).
+### `deploy-local`
+Builds and runs the app locally:
+- Runs `build` followed by `local`.
 
 ---
 
-Made with ♥ using [Wagtail](https://wagtail.io/) +
-[CodeRed Extensions](https://www.coderedcorp.com/cms/)
+## Usage
+
+Run tasks using:
+
+```bash
+task <task-name>
+```
+
+### Examples
+- Install dependencies:
+  ```bash
+  task install
+  ```
+- Deploy to Vercel:
+  ```bash
+  task deploy
+  ```
+
+## Documentation links
+
+- To customize the content, design, and features of the site see [Wagtail CRX](https://discord.com/channels/@me/1242407406638600305/1318208665626480670).
+
+- For deeper customization of backend code see [Wagtail](https://discord.com/channels/@me/1242407406638600305/1318208665626480670) and [Django](https://discord.com/channels/@me/1242407406638600305/1318208665626480670).
+
+- For HTML template design see [Bootstrap](https://discord.com/channels/@me/1242407406638600305/1318208665626480670).

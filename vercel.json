@@ -1,7 +1,8 @@
 {
+    "buildCommand": "poetry install",
     "builds": [
         {
-            "src": "mysite/wsgi.py",
+            "src": "safebear_cms/wsgi.py",
             "use": "@vercel/python",
             "config": {
                 "maxLambdaSize": "15mb",
@@ -12,7 +13,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "mysite/wsgi.py"
+            "dest": "safebear_cms/wsgi.py"
         },
         {
             "src": "/static/(.*)",
