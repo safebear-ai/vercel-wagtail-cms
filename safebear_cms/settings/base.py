@@ -118,7 +118,7 @@ WSGI_APPLICATION = "safebear_cms.wsgi.application"
 # database_url = os.getenv("DATABASE_URL_OPTION")
 database_url = config.database_url
 
-print(f"[SETTINGS] DATABASE_URL : {os.getenv("DATABASE_URL_OPTION")}")
+# print(f"[SETTINGS] DATABASE_URL : {os.getenv("DATABASE_URL_OPTION")}")
 DATABASES = {
     "default": dj_database_url.parse(
         database_url,
