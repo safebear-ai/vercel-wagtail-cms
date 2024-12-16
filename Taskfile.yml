@@ -36,7 +36,7 @@ tasks:
       - "task collectstatic"
       - "task migrate"
 
-  deploy:
+  deploy-preview:
     desc: "Déployer l'application sur Vercel"
     cmds:
       - "task build"
@@ -47,3 +47,9 @@ tasks:
     cmds:
       - "task build"
       - "task local"
+
+  deploy-prod:
+    desc: "Déployer l'application sur Vercel"
+    cmds:
+      - "npm i"
+      - "vercel --prod"

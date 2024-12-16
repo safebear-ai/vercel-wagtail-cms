@@ -60,13 +60,17 @@ Prepares the app for deployment by running:
 2. `collectstatic`
 3. `migrate`
 
-### `deploy`
-Builds and deploys the app to Vercel:
+### `deploy-preview`
+Builds and deploys the app preview to Vercel:
 - Runs `build`.
 - Deploys using `vercel`.
 
 ### `deploy-local`
 Builds and runs the app locally:
+- Runs `build` followed by `local`.
+
+### `deploy-prod`
+Builds and runs the app prod to Vercel:
 - Runs `build` followed by `local`.
 
 ---
