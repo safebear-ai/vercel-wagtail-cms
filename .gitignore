@@ -412,5 +412,9 @@ poetry.lock
 
 
 ./**/migrations/
+./**/__pycache__/
 .vercel
 .env*.local
+__pycache__
+cms/__pycache__
+.env.local
