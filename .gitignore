@@ -419,3 +419,4 @@ __pycache__
 cms/__pycache__
 .env.local
 /cms/static
+package-lock.json

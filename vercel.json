@@ -1,5 +1,4 @@
 {
-    "buildCommand": "poetry install",
     "builds": [
         {
             "src": "cms/wsgi.py",

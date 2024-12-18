@@ -12,7 +12,7 @@ import os
 from django.core.handlers.wsgi import WSGIHandler
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cms.settings.prod")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cms.settings.dev")
 
 application: WSGIHandler = get_wsgi_application()
 
