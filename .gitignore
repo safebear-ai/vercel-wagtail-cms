@@ -418,3 +418,4 @@ poetry.lock
 __pycache__
 cms/__pycache__
 .env.local
+/cms/static

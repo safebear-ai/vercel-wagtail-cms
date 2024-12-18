@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "safebear_cms"
+name = "cms"
 version = "0.1.0"
 description = ""
 authors = ["LeoLChalot <l.larouchalot@gmail.com>"]

@@ -1,0 +1,37 @@
+{% load wagtailimages_tags %}
+<div class="col-sm-6 col-lg-4">
+  <div id="card_index" class="card mb-3 h-100 rounded-4">
+    {% if article.cover_image %}
+    
+    <div class="cover_image w-100">
+    {% image article.cover_image fill-800x450 as img %}
+      <img
+        alt="img.alt"
+        class="show-transparency fill-800x450 format-webp preserve-svg rounded-top-4 w-100"
+
+        src="{{ img.url }}"
+        width="165"
+      />
+    </div>
+    {% endif %}
+    <div class="card-body d-flex flex-column justify-content-between p-4 pb-1">
+      <h2 class="card-title">
+        <a id="card-title-link" href="{{article.url}}" title="{{article.title}}"
+          >{{article.title}}</a
+        >
+        
+      </h2>
+      <div class="card-subtitle mb-2 text-muted">
+        {{article.seo_published_at}} &bull; {{article.seo_author}}
+      </div>
+      <div class="card-subtitle mb-2 text-muted">{{article.caption}}</div>
+      {% if self.show_preview_text %}
+      <p> {{ article.cover_image.url }}</p>
+      {% endif %}
+
+      <a class="card-link" href="{{ article.url }}" title="{{article.title}}"
+        >Lire l'article</a
+      >
+    </div>
+  </div>
+</div>
