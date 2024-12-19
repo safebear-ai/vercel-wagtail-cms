@@ -13,7 +13,8 @@ node_modules/
 .editorconfig
 .git
 .gitignore
+.gitattributes
 pyproject.toml
 /tests/
-__pycache__/
-
+**/__pycache__/
+safebear_cms/migrations/
