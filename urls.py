@@ -9,6 +9,8 @@ from django.urls.resolvers import URLResolver
 from wagtail.documents import urls as wagtaildocs_urls
 from django.conf.urls.static import static
 
+# Adding app's urls
+
 urlpatterns: list[URLResolver] = [
     # Admin
     path("django-admin/", admin.site.urls),
