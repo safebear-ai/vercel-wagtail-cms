@@ -10,6 +10,7 @@ node_modules
 ./venv
 ./package-lock.json
 ./node_module/
+
 ### Emacs ###
 
 # -*- mode: gitignore; -*-
@@ -420,3 +421,6 @@ cms/__pycache__
 .env.local
 /cms/static
 package-lock.json
+/.editorconfig
+/.gitattributes
+/safebear_cms/migrations
