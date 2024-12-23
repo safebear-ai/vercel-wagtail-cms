@@ -424,3 +424,4 @@ package-lock.json
 /.editorconfig
 /.gitattributes
 /safebear_cms/migrations
+/safebear_cms/static
