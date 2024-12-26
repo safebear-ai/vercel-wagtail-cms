@@ -17,6 +17,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "safebear_cms.settings.dev")
 application: WSGIHandler = get_wsgi_application()
 
 app = application
+
 # try:
 #     from django.core.wsgi import get_wsgi_application
 #     application: WSGIHandler = get_wsgi_application()
